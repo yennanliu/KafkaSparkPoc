@@ -1,1 +1,0 @@
-[0m[[0m[33mwarn[0m] [0m[0minsecure HTTP request is deprecated 'http://packages.confluent.io/maven/'; switch to HTTPS or opt-in as ("confluent.io" at "http://packages.confluent.io/maven/").withAllowInsecureProtocol(true)[0m

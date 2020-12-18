@@ -1,5 +1,0 @@
-[warn] insecure HTTP request is deprecated 'http://packages.confluent.io/maven/'; switch to HTTPS or opt-in as ("confluent.io" at "http://packages.confluent.io/maven/").withAllowInsecureProtocol(true)
-[debug] "not up to date. inChanged = true, force = false
-[debug] Updating ProjectRef(uri("file:/Users/yennan.liu/KafkaSparkPoc/kafka/"), "kafka")...
-[debug] Done updating ProjectRef(uri("file:/Users/yennan.liu/KafkaSparkPoc/kafka/"), "kafka")
-[warn] There may be incompatibilities among your library dependencies; run 'evicted' to see detailed eviction warnings.
