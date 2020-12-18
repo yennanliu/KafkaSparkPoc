@@ -1,0 +1,36 @@
+python/.DS_Store
+.DS_Store
+__pycache__
+*/__pycache__
+*.pyc
+.DS_Store
+dist/*
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+project/*
+target/*
+*.xsl
+*.xml
+*.DS_Store
+*.class
+pair.parquet/
+checkpointing
+checkpoints/
+derby.log
+metastore_db/
+data/orders.txt
+
+# IntelliJ
+.idea/
+
+# KafkaJava
+KafkaJava/.gradle/*
+KafkaJava/.gradle
+KafkaJava/.gradle/6.1.1/executionHistory/*
+KafkaJava/.gradle/6.1.1/executionHistory/executionHistory.bin
+*.bin
