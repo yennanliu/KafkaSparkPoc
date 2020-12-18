@@ -34,3 +34,4 @@ KafkaJava/.gradle
 KafkaJava/.gradle/6.1.1/executionHistory/*
 KafkaJava/.gradle/6.1.1/executionHistory/executionHistory.bin
 *.bin
+project/target/*

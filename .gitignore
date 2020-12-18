@@ -1,2 +1,6 @@
 *.class
 *.log
+
+# kafka
+kafka/project/target/scala-2.12/*
+kafka/project/target/stream/*
