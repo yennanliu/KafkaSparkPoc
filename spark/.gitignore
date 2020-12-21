@@ -1,5 +1,7 @@
 *.class
 *.log
+project/project/*
+project/target/*
 python/.DS_Store
 .DS_Store
 __pycache__
