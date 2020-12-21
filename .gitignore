@@ -1,3 +1,7 @@
 *.class
 *.log
 .DS_Store
+project/*
+target/*
+
+kafka/project/target/*

@@ -21,7 +21,7 @@ object StreamFromKafka extends App{
   import spark.implicits._
 
   // kafka config
-  val bootStrapServers = "localhost:9092"
+  val bootStrapServers = "127.0.0.1:9092"
   val topic = "raw_data"
 
   // subscribe to topic

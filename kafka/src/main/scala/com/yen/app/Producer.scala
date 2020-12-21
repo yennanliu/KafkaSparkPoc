@@ -7,14 +7,14 @@ import scala.util.Random
 object Producer extends App{
 
   val topic = "raw_data"
-  val brokers = "localhost:9092"
+  val brokers = "127.0.0.1:9092"
 
   val props = new Properties()
   props.put("bootstrap.servers", brokers)
   props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
   props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
   //  acks could be 0, 1, or -1 (all) : https://docs.confluent.io/current/installation/configuration/producer-configs.html
-  props.put("acks","all")
+  //props.put("acks","all")
 
   val producer = new KafkaProducer[String, String](props)
 
