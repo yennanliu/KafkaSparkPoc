@@ -36,13 +36,6 @@ object StreamDetailFromKafka extends App{
 
   tmpStreamDF.printSchema
 
-  val schema = StructType(
-    Array(
-      StructField("topic", StringType),
-      StructField("msg", StringType)
-    )
-  )
-
   val StreamDFSource = tmpStreamDF
     .select("topic", "value")
 
