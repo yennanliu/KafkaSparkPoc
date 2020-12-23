@@ -15,7 +15,7 @@ object StreamFromKafka extends App{
     .builder
     .appName("StreamFromKafka")
     .master("local[*]")
-    .config("spark.sql.warehouse.dir", "/temp") // Necessary to work around a Windows bug in Spark 2.0.0; omit if you're not on Windows.
+    //.config("spark.sql.warehouse.dir", "/temp") // Necessary to work around a Windows bug in Spark 2.0.0; omit if you're not on Windows.
     .getOrCreate()
 
   import spark.implicits._
@@ -32,12 +32,22 @@ object StreamFromKafka extends App{
     .option("subscribe", topic)
     .load()
 
-  streamDF.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
+  val tmpStreamDF = streamDF.selectExpr( "CAST(key AS STRING)", "CAST(value AS STRING)")
       .as[(String, String)]
 
-  streamDF.printSchema
+  tmpStreamDF.printSchema
 
-  streamDF.createGlobalTempView("event_table")
+  val schema = StructType(
+    Array(
+      StructField("msg", StringType)
+    )
+  )
+
+  val StreamDFSource = tmpStreamDF
+    .select(from_json(col("value"), schema).as("data"))
+    .select("data.*")
+
+  StreamDFSource.createOrReplaceTempView("event_table")
 
   val query = "SELECT * FROM event_table"
 
