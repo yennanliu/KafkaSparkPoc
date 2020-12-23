@@ -24,7 +24,8 @@ object Producer extends App{
     n += 1
     val runtime = new Date().getTime().toString
     val msg = s"this is $n event !!!"
-    val data = new ProducerRecord[String, String](runtime, msg)
+    // need to put "topic" as 1st argument
+    val data = new ProducerRecord[String, String](topic, s"runtime : $runtime | msg : $msg")
     println(s"*** sending $n data to receiver")
     producer.send(data)
     Thread.sleep(1000) // wait for 1000 millisecond
