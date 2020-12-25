@@ -54,6 +54,7 @@ object StreamDetailFromKafka extends App{
   spark.sql(query)
     .writeStream
     .format("console")
+    .trigger(Trigger.ProcressingTime("1 minute") // how long trigger each batch stream // https://www.udemy.com/course/apache-spark-streaming-in-scala/learn/lecture/21955214#questions
     .start()
     .awaitTermination()
 }
