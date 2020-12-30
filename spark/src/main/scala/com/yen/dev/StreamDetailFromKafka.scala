@@ -1,9 +1,11 @@
 package com.yen.dev
 
+//import org.apache.ivy.plugins.trigger.Trigger
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
-import org.apache.spark.sql.types.{StructType, StructField, StringType, IntegerType,LongType,FloatType,DoubleType, TimestampType}
+import org.apache.spark.sql.types.{DoubleType, FloatType, IntegerType, LongType, StringType, StructField, StructType, TimestampType}
 import org.apache.spark.SparkContext
+import org.apache.spark.sql.streaming.Trigger
 
 // https://github.com/yennanliu/NYC_Taxi_Pipeline/blob/master/src/main/scala/KafkaEventLoad/LoadKafkaEventExample.scala
 
@@ -54,7 +56,7 @@ object StreamDetailFromKafka extends App{
   spark.sql(query)
     .writeStream
     .format("console")
-    .trigger(Trigger.ProcressingTime("1 minute") // how long trigger each batch stream // https://www.udemy.com/course/apache-spark-streaming-in-scala/learn/lecture/21955214#questions
+    .trigger(Trigger.ProcessingTime("1 minute")) // how long trigger each batch stream // https://www.udemy.com/course/apache-spark-streaming-in-scala/learn/lecture/21955214#questions
     .start()
     .awaitTermination()
 }
