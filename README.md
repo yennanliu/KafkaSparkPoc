@@ -1,7 +1,14 @@
 # KafkaSparkPoc
 - Build some stream POC processings via Kafka & Spark
 - [Spark](./spark) : main Spark code
-- [Kafka](./Kafka) : main Kafka code
+- [Kafka](./kafka) : main Kafka code
+- Tech stack
+	- Scala
+	- SBT
+	- Spark
+	- Kafka
+	- IntellJ
+	- makefile
 
 ## Quick start
 - IntellJ
