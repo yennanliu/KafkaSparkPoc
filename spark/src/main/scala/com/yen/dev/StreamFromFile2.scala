@@ -20,7 +20,7 @@ object StreamFromFile2 extends App{
 
   val rawDF = spark.readStream
     .format("json")
-    .option("path", "../data/SampleData/*.json")
+    .option("path", "../data/SampleData01/*.json")
     .option("maxFilesPerTrigger", 1)
     .load()
 
@@ -51,6 +51,7 @@ object StreamFromFile2 extends App{
     .outputMode("append")
     .option("path", "output")
     .option("checkpointLocation", "chk-point-dir")
+    // trigger spark stream processing every 1 minute
     .trigger(Trigger.ProcessingTime("1 minute"))
     .start()
 
