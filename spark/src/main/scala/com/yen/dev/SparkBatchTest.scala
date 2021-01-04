@@ -1,5 +1,7 @@
 package com.yen.dev
 
+// simple spark batch
+
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.{Row, SparkSession}
 // https://github.com/yennanliu/NYC_Taxi_Pipeline/blob/master/src/main/scala/DataLoad/LoadGreenTripData.scala

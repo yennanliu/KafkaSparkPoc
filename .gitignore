@@ -4,4 +4,8 @@
 project/*
 target/*
 
+# kafka
 kafka/project/target/*
+
+# spark
+spark/chk-point-dir/*

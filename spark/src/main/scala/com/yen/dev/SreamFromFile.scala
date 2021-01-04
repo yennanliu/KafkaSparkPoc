@@ -1,12 +1,13 @@
 package com.yen.dev
 
+// spark streaming from file
+// https://github.com/yennanliu/NYC_Taxi_Pipeline/blob/master/src/main/scala/EventLoad/FileStreamExample.scala
+
 import java.util.concurrent.TimeUnit
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
-
-// https://github.com/yennanliu/NYC_Taxi_Pipeline/blob/master/src/main/scala/EventLoad/FileStreamExample.scala
 
 object StreamFromFile extends App{
 
