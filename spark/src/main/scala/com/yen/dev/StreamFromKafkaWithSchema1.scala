@@ -66,7 +66,7 @@ object StreamFromKafkaWithSchema1 extends App{
   )
 
   // get df from kafka
-  val kafkaTopic = "invoices"
+  val kafkaTopic = "invoices4"
   val kafkaDF = spark
     .readStream
     .format("kafka")
@@ -76,7 +76,7 @@ object StreamFromKafkaWithSchema1 extends App{
     .load()
 
   // kafkaDF.printSchema()
-  // you should see the kafka df schema like below via above print schema command:
+  // you should see the kafkaDF schema like below via above print schema command:
   //  root
   //  |-- key: binary (nullable = true)
   //  |-- value: binary (nullable = true)
@@ -88,6 +88,38 @@ object StreamFromKafkaWithSchema1 extends App{
 
   // select stream key, value as new df
   val valueDF = kafkaDF.select(from_json(col("value").cast("string"), schema).alias("value"))
+  //valueDF.printSchema()
+  // you should see the valueDF schema like below via above print schema command:
+  //  root
+  //  |-- value: struct (nullable = true)
+  //  |    |-- InvoiceNumber: string (nullable = true)
+  //  |    |-- CreatedTime: long (nullable = true)
+  //  |    |-- StoreID: string (nullable = true)
+  //  |    |-- PosID: string (nullable = true)
+  //  |    |-- CashierID: string (nullable = true)
+  //  |    |-- CustomerType: string (nullable = true)
+  //  |    |-- CustomerCardNo: string (nullable = true)
+  //  |    |-- TotalAmount: double (nullable = true)
+  //  |    |-- NumberOfItems: integer (nullable = true)
+  //  |    |-- PaymentMethod: string (nullable = true)
+  //  |    |-- CGST: double (nullable = true)
+  //  |    |-- SGST: double (nullable = true)
+  //  |    |-- CESS: double (nullable = true)
+  //  |    |-- DeliveryType: string (nullable = true)
+  //  |    |-- DeliveryAddress: struct (nullable = true)
+  //  |    |    |-- AddressLine: string (nullable = true)
+  //  |    |    |-- City: string (nullable = true)
+  //  |    |    |-- State: string (nullable = true)
+  //  |    |    |-- PinCode: string (nullable = true)
+  //  |    |    |-- ContactNumber: string (nullable = true)
+  //  |    |-- InvoiceLineItems: array (nullable = true)
+  //  |    |    |-- element: struct (containsNull = true)
+  //  |    |    |    |-- ItemCode: string (nullable = true)
+  //  |    |    |    |-- ItemDescription: string (nullable = true)
+  //  |    |    |    |-- ItemPrice: double (nullable = true)
+  //  |    |    |    |-- ItemQty: integer (nullable = true)
+  //  |    |    |    |-- TotalValue: double (nullable = true)
+
 
   // only filter out the needed columns
   val explodeDF = valueDF.selectExpr("value.InvoiceNumber", "value.CreatedTime", "value.StoreID",

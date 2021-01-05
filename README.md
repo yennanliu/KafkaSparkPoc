@@ -17,6 +17,18 @@
 - Command line
 	- dev
 
+## Run examples
+- Spark stream from  Kafka with Schema and write back to Kafka
+```bash
+# start zookeeper, kafka
+make run_kz
+# create kafka topic
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic invoices4
+# start producer  
+kafka-console-producer --broker-list localhost:9092 --topic invoices4
+# and paste some sample data (from sample.json) in the producer console, check the spark-streaming result
+```
+
 ## Ref
 - Tutorial & example code
 	- https://github.com/LearningJournal/Spark-Streaming-In-Scala
