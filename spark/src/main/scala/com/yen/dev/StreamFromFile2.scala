@@ -13,7 +13,7 @@ object StreamFromFile2 extends App{
 
   val spark = SparkSession.builder()
     .master("local[3]")
-    .appName("File Streaming Demo")
+    .appName("StreamFromFile2")
     .config("spark.streaming.stopGracefullyOnShutdown", "true")
     .config("spark.sql.streaming.schemaInference", "true")
     .getOrCreate()
