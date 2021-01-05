@@ -18,6 +18,11 @@
 	- dev
 
 ## Run examples
+
+<details>
+<summary>Run examples</summary>
+
+- [StreamFromKafkaWithSchema](./spark/src/main/scala/com/yen/dev/StreamFromKafkaWithSchema1.scala)
 - Spark stream from  Kafka with Schema and write back to Kafka
 ```bash
 # start zookeeper, kafka
@@ -26,8 +31,11 @@ make run_kz
 kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic invoices4
 # start producer  
 kafka-console-producer --broker-list localhost:9092 --topic invoices4
-# and paste some sample data (from sample.json) in the producer console, check the spark-streaming result
+# and paste some sample data below (sample.json) in the producer console, check the spark-streaming result at /output
 ```
+- [example.json](./data/SampleData02/samples.json)
+
+</details>
 
 ## Ref
 - Tutorial & example code
