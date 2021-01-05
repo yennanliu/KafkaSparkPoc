@@ -64,17 +64,27 @@ object StreamFromKafkaWithSchema1 extends App{
       )
     )
   )
-  
+
   // get df from kafka
+  val kafkaTopic = "invoices"
   val kafkaDF = spark
     .readStream
     .format("kafka")
     .option("kafka.bootstrap.servers", "localhost:9092")
-    .option("subscribe", "invoices")
-    .option("startingOffsets", "earliest")
+    .option("subscribe", kafkaTopic)
+    .option("startingOffsets", "earliest")  // read from the beginning from every run via the spark check point
     .load()
 
-  //kafkaDF.printSchema()
+  // kafkaDF.printSchema()
+  // you should see the kafka df schema like below via above print schema command:
+  //  root
+  //  |-- key: binary (nullable = true)
+  //  |-- value: binary (nullable = true)
+  //  |-- topic: string (nullable = true)
+  //  |-- partition: integer (nullable = true)
+  //  |-- offset: long (nullable = true)
+  //  |-- timestamp: timestamp (nullable = true)
+  //  |-- timestampType: integer (nullable = true)
 
   // select stream key, value as new df
   val valueDF = kafkaDF.select(from_json(col("value").cast("string"), schema).alias("value"))
