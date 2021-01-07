@@ -22,6 +22,12 @@
 <details>
 <summary>Run examples</summary>
 
+```bash
+# build 
+sbt clean compile
+sbt clean assembly
+```
+
 - [StreamFromKafkaWithSchema](./spark/src/main/scala/com/yen/dev/StreamFromKafkaWithSchema1.scala)
 - Spark stream from  Kafka with Schema and write back to Kafka
 ```bash
@@ -36,7 +42,7 @@ kafka-console-producer --broker-list localhost:9092 --topic invoices4
 # and run the spark-submit script
 spark-submit \
  --class com.yen.dev.StreamFromKafkaWithSchema1 \
- target/scala-2.11/spark-app.jar
+ target/scala-2.11/spark-app-assembly-1.0.jar
 ```
 - [example.json](./data/SampleData02/samples.json)
 
@@ -54,7 +60,7 @@ kafka-console-producer --broker-list localhost:9092 --topic invoices5
 # and run the spark-submit script
 spark-submit \
  --class com.yen.dev.KafkaSinkDemo1 \
- target/scala-2.11/spark-app.jar
+ target/scala-2.11/spark-app-assembly-1.0.jar
 ```
 </details>
 
