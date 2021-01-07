@@ -53,10 +53,12 @@ spark-submit \
 # start zookeeper, kafka
 make run_kz
 # create kafka topic
-kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic invoices5
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic invoices6
 kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic notifications
 # start producer  
 kafka-console-producer --broker-list localhost:9092 --topic invoices5
+# start consumer
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic notifications 
 # and run the spark-submit script
 spark-submit \
  --class com.yen.dev.KafkaSinkDemo1 \
