@@ -1,5 +1,6 @@
 package com.yen.dev
 
+// spark streaming and processing from kafka json with defined schema
 // https://github.com/yennanliu/KafkaSparkPoc/blob/main/exampleCode/Spark-Streaming-In-Scala-master/03-KafkaStreamDemo/src/main/scala/guru/learningjournal/spark/examples/KafkaStreamDemo.scala
 
 import org.apache.log4j.Logger
