@@ -32,9 +32,30 @@ kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partit
 # start producer  
 kafka-console-producer --broker-list localhost:9092 --topic invoices4
 # and paste some sample data below (sample.json) in the producer console, check the spark-streaming result at /output
+
+# and run the spark-submit script
+spark-submit \
+ --class com.yen.dev.StreamFromKafkaWithSchema1 \
+ target/scala-2.11/spark-app.jar
 ```
 - [example.json](./data/SampleData02/samples.json)
 
+
+- [KafkaSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaSinkDemo1.scala)
+- Spark stream from  Kafka with Schema and write back to Kafka
+```bash
+# start zookeeper, kafka
+make run_kz
+# create kafka topic
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic invoices5
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic notifications
+# start producer  
+kafka-console-producer --broker-list localhost:9092 --topic invoices5
+# and run the spark-submit script
+spark-submit \
+ --class com.yen.dev.KafkaSinkDemo1 \
+ target/scala-2.11/spark-app.jar
+```
 </details>
 
 ## Ref
