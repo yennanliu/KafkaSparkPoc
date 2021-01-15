@@ -48,7 +48,7 @@ object StreamFromFile3 extends App{
 
   val rawDF = spark.readStream
     .format("json")
-    .option("path", "../data/GB_category_id.json")
+    .option("path", "../data/GB_category/*.json")
     .option("maxFilesPerTrigger", 1)
     .schema(schema)  // https://spark.apache.org/docs/2.1.1/structured-streaming-programming-guide.html
     .load()
@@ -61,10 +61,14 @@ object StreamFromFile3 extends App{
   explodeDF.printSchema()
 
   // show in console
+  val output = "output"
   val query = explodeDF
     .writeStream
-    .format("console")
+    .format("json")
     .outputMode(OutputMode.Append())
+    .option("path", output)
+    .option("checkpointLocation", "chk-point-dir")
+    .trigger(Trigger.ProcessingTime("1 minute"))
     .start()
 
   query.awaitTermination()
