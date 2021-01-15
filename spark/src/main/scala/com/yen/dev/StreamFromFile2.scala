@@ -45,11 +45,12 @@ object StreamFromFile2 extends App{
     .drop("LineItem")
 
   // write output intp json format
+  val output = "output"
   val invoiceWriterQuery = flattenedDF.writeStream
     .format("json")
     .queryName("Flattened Invoice Writer")
     .outputMode("append")
-    .option("path", "output")
+    .option("path", output)
     .option("checkpointLocation", "chk-point-dir")
     // trigger spark stream processing every 1 minute
     .trigger(Trigger.ProcessingTime("1 minute"))
