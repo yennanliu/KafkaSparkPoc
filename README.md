@@ -28,7 +28,7 @@ sbt clean compile
 sbt clean assembly
 ```
 
-- [StreamFromKafkaWithSchema](./spark/src/main/scala/com/yen/dev/StreamFromKafkaWithSchema1.scala)
+- 1. [StreamFromKafkaWithSchema](./spark/src/main/scala/com/yen/dev/StreamFromKafkaWithSchema1.scala)
 - Spark stream from  Kafka with Schema and write back to Kafka
 ```bash
 # start zookeeper, kafka
@@ -44,10 +44,10 @@ spark-submit \
  --class com.yen.dev.StreamFromKafkaWithSchema1 \
  target/scala-2.11/spark-app-assembly-1.0.jar
 ```
-- [example.json](./data/SampleData02/samples.json)
+	- [example.json](./data/SampleData02/samples.json)
 
 
-- [KafkaSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaSinkDemo1.scala)
+- 2. [KafkaSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaSinkDemo1.scala)
 - Spark stream from  Kafka with Schema and write back to Kafka
 ```bash
 # start zookeeper, kafka
@@ -64,6 +64,26 @@ spark-submit \
  --class com.yen.dev.KafkaSinkDemo1 \
  target/scala-2.11/spark-app-assembly-1.0.jar
 ```
+
+- 3. [KafkaAvroSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaAvroSinkDemo1.scala)
+- Spark stream from Kafka with Schema and write back to Kafka `in avro format`
+```bash
+# start zookeeper, kafka
+make run_kz
+# create kafka topic
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic invoices_avro
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic invoice_avro_output
+# start producer  
+kafka-console-producer --broker-list localhost:9092 --topic invoices_avro
+# start consumer
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic invoice_avro_output 
+# and run the spark-submit script
+spark-submit \
+ --class com.yen.dev.KafkaSinkDemo1 \
+ target/scala-2.11/spark-app-assembly-1.0.jar
+```
+	- [example.json](./data/SampleData02/samples.json)
+
 </details>
 
 ## Ref

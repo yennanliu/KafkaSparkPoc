@@ -9,7 +9,7 @@ val sparkVersion = "2.4.3"
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= Seq(
-  // config
+  // spark-core
   "com.typesafe" % "config" % "1.2.1", 
   "org.apache.spark" %% "spark-core" % sparkVersion,
   "org.scalactic" %% "scalactic" % "3.1.0",

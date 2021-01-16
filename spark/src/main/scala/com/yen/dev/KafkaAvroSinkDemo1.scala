@@ -89,7 +89,7 @@ object KafkaAvroSinkDemo1 extends App{
   val kafkaTargetDF = flattenedDF.select(expr("InvoiceNumber as key"),
     to_avro(struct("*")).alias("value"))
 
-  val outPutKafkaTopic = "invoice-avro-items"
+  val outPutKafkaTopic = "invoice_avro_output"
   val invoiceWriterQuery = kafkaTargetDF
     .writeStream
     .queryName("Flattened Invoice Writer")
