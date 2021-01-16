@@ -28,7 +28,7 @@ sbt clean compile
 sbt clean assembly
 ```
 
-- 1. [StreamFromKafkaWithSchema](./spark/src/main/scala/com/yen/dev/StreamFromKafkaWithSchema1.scala)
+#### 1. [StreamFromKafkaWithSchema](./spark/src/main/scala/com/yen/dev/StreamFromKafkaWithSchema1.scala)
 - Spark stream from  Kafka with Schema and write back to Kafka
 ```bash
 # start zookeeper, kafka
@@ -47,7 +47,7 @@ spark-submit \
 	- [example.json](./data/SampleData02/samples.json)
 
 
-- 2. [KafkaSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaSinkDemo1.scala)
+#### 2. [KafkaSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaSinkDemo1.scala)
 - Spark stream from  Kafka with Schema and write back to Kafka
 ```bash
 # start zookeeper, kafka
@@ -65,7 +65,7 @@ spark-submit \
  target/scala-2.11/spark-app-assembly-1.0.jar
 ```
 
-- 3. [KafkaAvroSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaAvroSinkDemo1.scala)
+#### 3. [KafkaAvroSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaAvroSinkDemo1.scala)
 - Spark stream from Kafka with Schema and write back to Kafka `in avro format`
 ```bash
 # start zookeeper, kafka
