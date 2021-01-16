@@ -20,12 +20,6 @@ object StreamFromFile3 extends App{
     .getOrCreate()
 
   val schema = StructType(
-    List(
-      StructField("kind", StringType),
-      StructField("etag", StringType),
-      StructField(
-        "items",
-        StructType(
           List(
             StructField("kind", StringType),
             StructField("etag", StringType),
@@ -42,9 +36,6 @@ object StreamFromFile3 extends App{
             )
           )
         )
-      )
-    )
-  )
 
   val rawDF = spark.readStream
     .format("json")
@@ -56,7 +47,8 @@ object StreamFromFile3 extends App{
   rawDF.printSchema()
 
   // let's select columns from the rawDF
-  val explodeDF = rawDF.selectExpr("kind", "etag", "items.kind", "items.snippet.channelId" )
+  val explodeDF = rawDF
+    .selectExpr("kind", "etag", "id", "snippet.channelId", "snippet.title", "snippet.assignable")
 
   explodeDF.printSchema()
 
@@ -65,7 +57,8 @@ object StreamFromFile3 extends App{
   val query = explodeDF
     .writeStream
     .format("json")
-    .outputMode(OutputMode.Append())
+    .queryName("explodeDF Writer")
+    .outputMode("append")
     .option("path", output)
     .option("checkpointLocation", "chk-point-dir")
     .trigger(Trigger.ProcessingTime("1 minute"))
