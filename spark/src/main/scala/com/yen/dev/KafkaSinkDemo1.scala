@@ -90,16 +90,15 @@ object KafkaSinkDemo1 extends App{
       |'EarnedLoyaltyPoints', TotalAmount * 0.2
       |)) as value""".stripMargin)
 
-
   // if output result in console; rather than sending to another kafka topic
   /*
-val notificationWriterQuery = kafkaTargetDF.writeStream
-  .format("console")
-  .outputMode("append")
-  .option("truncate", "false")
-  .option("checkpointLocation", "chk-point-dir")
-  .start()
-*/
+  val notificationWriterQuery = kafkaTargetDF.writeStream
+    .format("console")
+    .outputMode("append")
+    .option("truncate", "false")
+    .option("checkpointLocation", "chk-point-dir")
+    .start()
+  */
 
   // send output to another kafka topic
   val outPutKafkaTopic = "notifications"

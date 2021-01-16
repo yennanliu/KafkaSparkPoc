@@ -1,5 +1,6 @@
 package com.yen.dev
 
+// spark streaming process stream from kafka and save back (sink) to kafka with apache avro format
 // https://github.com/yennanliu/KafkaSparkPoc/blob/main/exampleCode/Spark-Streaming-In-Scala-master/06-KafkaAvroSinkDemo/src/main/scala/guru/learningjournal/spark/examples/KafkaAvroSinkDemo.scala
 
 import org.apache.log4j.Logger
