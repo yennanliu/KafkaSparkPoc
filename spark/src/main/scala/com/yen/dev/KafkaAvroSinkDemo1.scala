@@ -71,6 +71,7 @@ object KafkaAvroSinkDemo1 extends App{
     .option("kafka.bootstrap.servers", "localhost:9092")
     .option("subscribe", kafkaTopic)
     .option("startingOffsets", "earliest")
+    .option("failOnDataLoss", "false")
     .load()
 
   val valueDF = kafkaSourceDF.select(from_json(col("value").cast("string"), schema).alias("value"))
@@ -99,6 +100,7 @@ object KafkaAvroSinkDemo1 extends App{
     .option("topic", outPutKafkaTopic)
     .outputMode("append")
     .option("checkpointLocation", "chk-point-dir")
+    .option("failOnDataLoss", "false")
     .start()
 
   logger.info("Start Writer Query")

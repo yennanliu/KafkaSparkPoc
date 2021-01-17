@@ -27,6 +27,7 @@ object KafkaAvroSourceDemo1 extends App{
     .option("kafka.bootstrap.servers", "localhost:9092")
     .option("subscribe", kafkaSourceTopic)
     .option("startingOffsets", "earliest")
+    .option("failOnDataLoss", "false")
     .load()
 
   // load avro schema from file
@@ -56,6 +57,7 @@ object KafkaAvroSourceDemo1 extends App{
     .option("topic", kafkaOutTopic)
     .outputMode("update")
     .option("checkpointLocation", "chk-point-dir")
+    .option("failOnDataLoss", "false")
     .start()
 
   rewardsWriterQuery.awaitTermination()
