@@ -19,11 +19,13 @@ object KafkaAvroSourceDemo1 extends App{
     .config("spark.streaming.stopGracefullyOnShutdown", "true")
     .getOrCreate()
 
+  // *** WILL READ KAFKA STREAM FROM "KafkaAvroSinkDemo1"
+  val kafkaSourceTopic = "invoice_avro_output"
   val kafkaSourceDF = spark
     .readStream
     .format("kafka")
     .option("kafka.bootstrap.servers", "localhost:9092")
-    .option("subscribe", "invoice-items")
+    .option("subscribe", kafkaSourceTopic)
     .option("startingOffsets", "earliest")
     .load()
 
@@ -32,7 +34,7 @@ object KafkaAvroSourceDemo1 extends App{
 
   val valueDF = kafkaSourceDF.select(from_avro(col("value"), avroSchema).alias("value"))
 
-  valueDF.printSchema()
+  //valueDF.printSchema()
 
   val rewardsDF = valueDF.filter("value.CustomerType == 'PRIME'")
     .groupBy("value.CustomerCardNo")
@@ -40,9 +42,10 @@ object KafkaAvroSourceDemo1 extends App{
       sum(expr("value.TotalValue * 0.2").cast("integer")).alias("AggregatedRewards"))
 
   val kafkaTargetDF = rewardsDF.select(expr("CustomerCardNo as key"),
-    to_json(struct("TotalPurchase", "AggregatedRewards")).alias("value"))
+    to_json(struct("TotalPurchase", "AggregatedRewards"))
+      .alias("value"))
 
-  kafkaTargetDF.show(false)
+  //kafkaTargetDF.show(false)
 
   val kafkaOutTopic = "kafka_avro_output"
   val rewardsWriterQuery = kafkaTargetDF
