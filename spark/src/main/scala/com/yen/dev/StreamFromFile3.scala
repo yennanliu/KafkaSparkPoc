@@ -52,7 +52,6 @@ object StreamFromFile3 extends App{
 
   explodeDF.printSchema()
 
-  // show in console
   val output = "output"
   val query = explodeDF
     .writeStream

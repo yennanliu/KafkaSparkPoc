@@ -40,6 +40,22 @@ object StreamFromFileSendToKafka1 extends App{
   parseDF.printSchema()
 
   // clean the data
-  
-  // WIP
+  val tmpDF = parseDF
+      .selectExpr("uid", "name", "msg")
+
+  val filteredDF = tmpDF
+    .withColumn("msgCleaned", expr("msg".replaceAll("[^A-Za-z]+", "")))
+
+  val output = "output"
+  val query = filteredDF
+    .writeStream
+    .format("json")
+    .queryName("explodeDF Writer")
+    .outputMode("append")
+    .option("path", output)
+    .option("checkpointLocation", "chk-point-dir")
+    .trigger(Trigger.ProcessingTime("1 minute"))
+    .start()
+
+  query.awaitTermination()
 }
