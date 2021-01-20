@@ -1,5 +1,6 @@
 package com.yen.dev
 
+// Spark stream from Kafka with Schema and process with Tumbling Window for total `buy and sell` values
 // https://github.com/yennanliu/KafkaSparkPoc/blob/main/exampleCode/Spark-Streaming-In-Scala-master/08-TumblingWindowDemo/src/main/scala/guru/learningjournal/spark/examples/TumblingWindowDemo.scala
 
 import org.apache.log4j.Logger

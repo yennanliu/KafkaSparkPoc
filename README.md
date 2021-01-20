@@ -83,6 +83,22 @@ spark-submit \
  target/scala-2.11/spark-app-assembly-1.0.jar
 ```
 
+#### 4. [TumblingWindowDemo1](./spark/src/main/scala/com/yen/dev/TumblingWindowDemo1.scala)
+- Spark stream from Kafka with Schema and process with Tumbling Window for total `buy and sell` values
+- [example.json](./data/SampleData04/data/samples.txt)
+```bash
+# start zookeeper, kafka
+make run_kz
+# create kafka topic
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic trades
+# start producer  
+kafka-console-producer --broker-list localhost:9092 --topic trades
+# and run the spark-submit script
+spark-submit \
+ --class com.yen.dev.TumblingWindowDemo1 \
+ target/scala-2.11/spark-app-assembly-1.0.jar
+```
+
 </details>
 
 ## Ref
