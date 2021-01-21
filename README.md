@@ -85,7 +85,7 @@ spark-submit \
 
 #### 4. [TumblingWindowDemo1](./spark/src/main/scala/com/yen/dev/TumblingWindowDemo1.scala)
 - Spark stream from Kafka with Schema and process with Tumbling Window for total `buy and sell` values
-- [example.json](./data/SampleData04/data/samples.txt)
+- [samples.txt](./data/SampleData05/data/samples.txt)
 ```bash
 # start zookeeper, kafka
 make run_kz
