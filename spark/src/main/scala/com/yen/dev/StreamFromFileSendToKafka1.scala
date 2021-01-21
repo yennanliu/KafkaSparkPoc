@@ -17,6 +17,10 @@ object StreamFromFileSendToKafka1 extends App{
     .config("spark.sql.streaming.schemaInference", "true")
     .getOrCreate()
 
+  // need to import spark.implicits._ for avoid “value $ is not a member of StringContext”
+  // https://stackoverflow.com/questions/44209756/value-is-not-a-member-of-stringcontext-missing-scala-plugin/44210165
+  import spark.implicits._
+
   val schema = StructType(
       List(
         StructField("uid", StringType),
@@ -43,8 +47,19 @@ object StreamFromFileSendToKafka1 extends App{
   val tmpDF = parseDF
       .selectExpr("uid", "name", "msg")
 
-  val filteredDF = tmpDF
-    .withColumn("msgCleaned", expr("msg".replaceAll("[^A-Za-z]+", "")))
+  //https://www.instaclustr.com/apache-spark-structured-streaming-dataframes/
+  //  val filteredDF = tmpDF
+  //    .withColumn("msgCleaned", expr("msg".replaceAll("\"[^a-zA-Z0-9!@\\\\.,]\"", "")))
+
+  val filteredDF = tmpDF.withColumn("new_msg", lower($"msg"))
+
+  // https://stackoverflow.com/questions/27249685/sql-functions-with-schemardd-using-language-integrated-sql
+  //  val filteredDF2 = tmpDF
+  //    .filter($"msg" rlike ".[^a-zA-Z0-9!@\\\\\\\\.,]")
+
+  //  val filteredDF = tmpDF
+  //    .where('msg rlike "^[A-Z]{20}$")
+  //    .select('msg)
 
   val output = "output"
   val query = filteredDF
