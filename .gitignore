@@ -10,3 +10,5 @@ kafka/project/target/*
 # spark
 spark/chk-point-dir/*
 spark/output/*
+
+data/dev/parsed.txt
