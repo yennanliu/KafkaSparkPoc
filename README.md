@@ -99,9 +99,11 @@ spark-submit \
 
 #### 1. Digest Kafka stream and emit to Kafka
 ```
-Kafka -----------> Spark Stream  -----------> Kafka 
-      topic = event_raw           topic = event_clean
+Event Source -----------> Kafka -----------> Spark Stream  -----------> Kafka 
+                                topic = event_raw        topic = event_clean
 ```
+- Kafka
+- Spark
 
 </details>
 
@@ -109,7 +111,7 @@ Kafka -----------> Spark Stream  -----------> Kafka
 - Tutorial & example code
 	- https://github.com/LearningJournal/Spark-Streaming-In-Scala
 	- https://www.udemy.com/course/apache-spark-streaming-in-scala/
-	
+
 - Other code ref
 	- https://github.com/spirom/spark-streaming-with-kafka
 	- https://github.com/LearningJournal/Kafka-Streams-Real-time-Stream-Processing
