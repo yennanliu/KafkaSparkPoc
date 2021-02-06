@@ -3,24 +3,15 @@
 - [Spark](./spark) : main Spark code
 - [Kafka](./kafka) : main Kafka code
 - Tech stack
-	- Scala
+	- Scala, Spark, Kafka
+- Build tool
 	- SBT
-	- Spark
-	- Kafka
-	- IntellJ
-	- makefile
+- IDE : IntellJ
 
-## Quick start
-- IntellJ
-	- dev
-
-- Command line
-	- dev
-
-## Run examples
+## Run Basic examples
 
 <details>
-<summary>Run examples</summary>
+<summary>Run Basic examples</summary>
 
 ```bash
 # build 
@@ -101,10 +92,24 @@ spark-submit \
 
 </details>
 
+## Run examples
+
+<details>
+<summary>Run examples</summary>
+
+#### 1. Digest Kafka stream and emit to Kafka
+```
+Kafka -----------> Spark Stream  -----------> Kafka 
+      topic = event_raw           topic = event_clean
+```
+
+</details>
+
 ## Ref
 - Tutorial & example code
 	- https://github.com/LearningJournal/Spark-Streaming-In-Scala
 	- https://www.udemy.com/course/apache-spark-streaming-in-scala/
+	
 - Other code ref
 	- https://github.com/spirom/spark-streaming-with-kafka
 	- https://github.com/LearningJournal/Kafka-Streams-Real-time-Stream-Processing
