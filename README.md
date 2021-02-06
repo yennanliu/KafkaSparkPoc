@@ -103,7 +103,18 @@ Event Source -----------> Kafka -----------> Spark Stream  -----------> Kafka
                                 topic = event_raw        topic = event_clean
 ```
 - Kafka
+```bash
+# create topic
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic event_raw
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic event_clean
+
+```
 - Spark
+```bash
+spark-submit \
+ --class com.yen.DigestKafkaEmitKafka \
+ target/scala-2.11/spark-app-assembly-1.0.jar
+```
 
 </details>
 
