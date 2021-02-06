@@ -42,5 +42,4 @@ object Producer extends App {
     producer.send(data)
     Thread.sleep(1000) // wait for 1000 millisecond
   }
-  
 }
