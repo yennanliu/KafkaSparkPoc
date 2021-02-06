@@ -33,8 +33,9 @@ object StreamFromSocket2 extends App {
   // let's filter the df here!
   // https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html
   val filterDF = wordsDF
-     .filter("word like '#'")
-    //.filter("word > 10")
+      .filter($"word".contains("!@?#"))
+      //.filter("word like '#'")
+      //.filter("word > 10")
 
   val countsDF = filterDF.groupBy("word").count()
 
