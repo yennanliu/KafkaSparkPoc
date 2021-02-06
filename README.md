@@ -102,14 +102,14 @@ spark-submit \
 Event Source -----------> Kafka -----------> Spark Stream  -----------> Kafka 
                                 topic = event_raw        topic = event_clean
 ```
-- Kafka
+- Kafka : [Producer.scala](./kafka/src/main/scala/com/yen/DigestKafkaEmitKafka/Producer.scala)
 ```bash
 # create topic
 kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic event_raw
 kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic event_clean
 
 ```
-- Spark
+- Spark : [ProcessAndEmitKafka.scala](./spark/src/main/scala/com/yen/DigestKafkaEmitKafka/ProcessAndEmitKafka.scala)
 ```bash
 spark-submit \
  --class com.yen.DigestKafkaEmitKafka \
