@@ -12,3 +12,8 @@ spark/chk-point-dir/*
 spark/output/*
 
 data/dev/parsed.txt
+
+# kafaka java
+kafkaJava/.idea/
+kafkaJava/target/
+kafkaJava/pos-simulator.iml
