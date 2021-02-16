@@ -48,14 +48,14 @@ object ProcessAndEmitKafka extends App {
 
   // let's clean the stream df here!
 
-
   //  val filterDF = tmpStreamDF
   //    .withColumn("value", regexp_replace(tmpStreamDF("value"), "\\???", ""))
 
   val filterDF = tmpStreamDF
-    .withColumn("value", regexp_replace(tmpStreamDF("value"), "abc", "xxx"))
+    .withColumn("value", regexp_replace(tmpStreamDF("value"), "\\?", ""))
 
-  //val filterDF = tmpStreamDF
+  //  val filterDF = tmpStreamDF
+  //    .withColumn("value", regexp_replace(tmpStreamDF("value"), "abc", "xxx"))
 
   val ToStreamDF = filterDF
     .select("value")
