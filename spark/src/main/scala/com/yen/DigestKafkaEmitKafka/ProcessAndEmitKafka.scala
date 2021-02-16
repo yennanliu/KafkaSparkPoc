@@ -6,10 +6,8 @@ package com.yen.DigestKafkaEmitKafka
 
 // https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/dev/StreamFromKafka.scala
 
-import com.yen.dev.StreamFromKafka.tmpStreamDF
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
-import org.apache.spark.sql.types.{DoubleType, FloatType, IntegerType, LongType, StringType, StructField, StructType, TimestampType}
 import org.apache.spark.SparkContext
 
 object ProcessAndEmitKafka extends App {
@@ -39,12 +37,23 @@ object ProcessAndEmitKafka extends App {
 
   val tmpStreamDF = streamDF.selectExpr("CAST(value AS STRING)")
 
+  // print tmpDF
+  //  val tmpQuery = tmpStreamDF
+  //    .writeStream
+  //    .format("console")
+  //    .outputMode(OutputMode.Append())
+  //    .start()
+  //
+  //  tmpQuery.awaitTermination()
+
   // let's clean the stream df here!
 
   val filterDF = tmpStreamDF
     .withColumn("value", regexp_replace(tmpStreamDF("value"), "\\???", ""))
 
-  val ToStreamDF = tmpStreamDF
+  //val filterDF = tmpStreamDF
+
+  val ToStreamDF = filterDF
     .select("value")
 
   ToStreamDF.createOrReplaceTempView("to_stream")
@@ -53,13 +62,15 @@ object ProcessAndEmitKafka extends App {
 
   // send the cleaned event to kafka with another topic
   val ToKafkaTopic = "event_clean"
-  val notificationWriterQuery = ToStreamDF
+  val notificationWriterQuery = tmpStreamDF
     .writeStream
     .queryName("Notification Writer")
     .format("kafka")
     .option("kafka.bootstrap.servers", "localhost:9092")
     .option("topic", ToKafkaTopic)
-    .outputMode("append")
+    .outputMode("append") //.outputMode(OutputMode.Append())
     .option("checkpointLocation", "chk-point-dir")
     .start()
+
+  notificationWriterQuery.awaitTermination()
 }

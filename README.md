@@ -109,6 +109,8 @@ kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partit
 kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic event_clean
 
 # start consumer
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic event_raw
+
 kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic event_clean
 ```
 - Spark : [ProcessAndEmitKafka.scala](./spark/src/main/scala/com/yen/DigestKafkaEmitKafka/ProcessAndEmitKafka.scala)
