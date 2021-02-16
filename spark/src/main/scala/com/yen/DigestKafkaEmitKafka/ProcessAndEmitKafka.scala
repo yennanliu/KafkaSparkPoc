@@ -48,8 +48,12 @@ object ProcessAndEmitKafka extends App {
 
   // let's clean the stream df here!
 
+
+  //  val filterDF = tmpStreamDF
+  //    .withColumn("value", regexp_replace(tmpStreamDF("value"), "\\???", ""))
+
   val filterDF = tmpStreamDF
-    .withColumn("value", regexp_replace(tmpStreamDF("value"), "\\???", ""))
+    .withColumn("value", regexp_replace(tmpStreamDF("value"), "abc", "xxx"))
 
   //val filterDF = tmpStreamDF
 
@@ -58,11 +62,11 @@ object ProcessAndEmitKafka extends App {
 
   ToStreamDF.createOrReplaceTempView("to_stream")
 
-  val query = "SELECT * FROM to_stream"
+  //val query = "SELECT * FROM to_stream"
 
   // send the cleaned event to kafka with another topic
   val ToKafkaTopic = "event_clean"
-  val notificationWriterQuery = tmpStreamDF
+  val notificationWriterQuery = ToStreamDF
     .writeStream
     .queryName("Notification Writer")
     .format("kafka")
