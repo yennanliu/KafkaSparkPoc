@@ -10,7 +10,7 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.Trigger
 import org.apache.spark.sql.types.{DoubleType, StringType, StructField, StructType}
 
-class SlidingWindowDemo extends App {
+object SlidingWindowDemo extends App {
   @transient lazy val logger:Logger = Logger.getLogger(getClass.getName)
 
   val spark = SparkSession.builder()
