@@ -11,7 +11,7 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 object TransformDemo1 extends App {
 
   // get sparkConf
-  val sparkConf:SparkConf = new SparkConf()
+  val sparkConf: SparkConf = new SparkConf()
     .setMaster("local[*]")
     .setAppName("TransformDemo1")
 
@@ -24,7 +24,8 @@ object TransformDemo1 extends App {
 
   /** Transform */
   //*** transform DStream to RDD
-  val wordAndCountDStream:DStream[(String, Int)] = lineDStream.transform( rdd => {
+  // (below is "non status" transformation
+  val wordAndCountDStream: DStream[(String, Int)] = lineDStream.transform( rdd => {
 
     val words: RDD[String] = rdd.flatMap(_.split(" "))
 
