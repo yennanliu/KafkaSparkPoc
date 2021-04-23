@@ -35,9 +35,10 @@ object streamSocketEventToHDFSV2 extends App {
   // window func example : https://stackoverflow.com/questions/46687491/spark-structured-streaming-aggregate-over-last-20-seconds
   val windowedCounts = lines.
     groupBy(
-      window($"timestamp", "20 seconds"),
-      $"value").
-    agg(count($"value") as "count", last($"timestamp") as "last_ts", first($"timestamp") as "first_ts").
+      window($"timestamp", "20 seconds"), $"value")
+      .agg(count($"value") as "count",
+      last($"timestamp") as "last_ts",
+      first($"timestamp") as "first_ts").
     select($"window.start", $"window.end",  $"last_ts", $"first_ts", $"value", $"count")
 
   val query = windowedCounts.writeStream.
