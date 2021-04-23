@@ -32,14 +32,11 @@ object StreamFromSocket4 extends App{
   //val wordsDF = linesDF.select(explode(split(col("value"), " ")).alias("word"))
   val wordsDF = linesDF.select(
     expr("explode(split(value,' ')) as word"),
-    date_format(col("current_timestamp"),"HH:mm:ss.SSS").as("time")
+    date_format(col("current_timestamp"),"yyyy-MM-dd HH:mm:ss.SSS").as("time")
   )
-
-  val countsDF = wordsDF.groupBy("word").count()
 
   val wordCountQuery = wordsDF.writeStream
     .format("console")
-    //.option("numRows", 2)
     .option("checkpointLocation", "chk-point-dir") // set up the "checkpoint"
     .start()
 
