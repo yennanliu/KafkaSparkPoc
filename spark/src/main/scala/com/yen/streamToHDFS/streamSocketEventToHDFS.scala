@@ -28,7 +28,12 @@ object streamSocketEventToHDFS extends App {
     .option("port", "9999")
     .load()
 
-  val words = lines.select(expr("explode(split(value,' ')) as word"))
+  // spark select as timestamp : https://sparkbyexamples.com/spark/spark-current-date-and-timestamp/
+  val words = lines.select(
+    expr("explode(split(value,' ')) as word"),
+    date_format(col("current_timestamp"),"HH:mm:ss.SSS").as("time")
+  )
+
   val counts = words.groupBy("word").count()
 
   val wordCountQuery = counts.writeStream
@@ -42,11 +47,13 @@ object streamSocketEventToHDFS extends App {
   // output format : https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#output-sinks
   val countsDF = counts.toDF()
 
-  countsDF.writeStream
-      .format("parquet")
-      .option("path", "hdfs://KafkaSparkPoc/output/")
+  val wordCountQuery2 = words.writeStream
+      .format("json")
+      .option("checkpointLocation", "chk-point-dir2") // set up the "checkpoint"
+      .option("path", "streamSocketEventToHDFS")
       .start()
 
   logger.info("Listening to localhost:9999")
+  wordCountQuery2.awaitTermination()
   wordCountQuery.awaitTermination()
 }
