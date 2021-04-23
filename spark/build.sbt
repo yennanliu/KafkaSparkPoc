@@ -1,6 +1,7 @@
-name := "spark-app"
 
-version := "1.0"
+version := "0.0.1"
+organization:= "com.yen"
+name := "spark-app"
 
 scalaVersion := "2.11.8"
 
