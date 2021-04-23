@@ -10,6 +10,7 @@ kafka/project/target/*
 # spark
 spark/chk-point-dir/*
 spark/output/*
+spark/chk-point-dir2/*
 
 data/dev/parsed.txt
 
@@ -18,6 +19,7 @@ kafkaJava/.idea/
 kafkaJava/target/
 kafkaJava/pos-simulator.iml
 
+# sbt
 kafka/project/target/scala-2.12/sbt-1.0/update/update_cache_2.12/output
 kafka/project/target/streams/compile/compileIncremental/_global/streams/out
 kafka/project/target/streams/compile/copyResources/_global/streams/out
