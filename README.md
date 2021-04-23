@@ -34,7 +34,7 @@ kafka-console-producer --broker-list localhost:9092 --topic invoices4
 # and run the spark-submit script
 spark-submit \
  --class com.yen.dev.StreamFromKafkaWithSchema1 \
- target/scala-2.11/spark-app-assembly-1.0.jar
+ target/scala-2.11/spark-app-assembly-0.0.1.jar
 ```
 
 #### 2. [KafkaSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaSinkDemo1.scala)
@@ -52,7 +52,7 @@ kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic notifications
 # and run the spark-submit script
 spark-submit \
  --class com.yen.dev.KafkaSinkDemo1 \
- target/scala-2.11/spark-app-assembly-1.0.jar
+ target/scala-2.11/spark-app-assembly-0.0.1.jar
 ```
 
 #### 3. [KafkaAvroSinkDemo1](./spark/src/main/scala/com/yen/dev/KafkaAvroSinkDemo1.scala)
@@ -71,7 +71,7 @@ kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic invoice_avro_ou
 # and run the spark-submit script
 spark-submit \
  --class com.yen.dev.KafkaSinkDemo1 \
- target/scala-2.11/spark-app-assembly-1.0.jar
+ target/scala-2.11/spark-app-assembly-0.0.1.jar
 ```
 
 #### 4. [TumblingWindowDemo1](./spark/src/main/scala/com/yen/dev/TumblingWindowDemo1.scala)
@@ -87,7 +87,21 @@ kafka-console-producer --broker-list localhost:9092 --topic trades
 # and run the spark-submit script
 spark-submit \
  --class com.yen.dev.TumblingWindowDemo1 \
- target/scala-2.11/spark-app-assembly-1.0.jar
+ target/scala-2.11/spark-app-assembly-0.0.1.jar
+```
+
+#### 4. [streamSocketEventToHDFS](./spark/src/main/scala/com/yen/streamToHDFS/streamSocketEventToHDFS.scala)
+- Spark stream event from socket to HDFS file system
+```bash
+# open a socket at port 9999
+nc -lk 9999
+# and run the spark-submit script
+spark-submit \
+ --class com.yen.streamToHDFS.streamSocketEventToHDFS \
+ target/scala-2.11/spark-app-assembly-0.0.1.jar
+
+# check the data
+hdfs dfs -ls streamSocketEventToHDFS
 ```
 
 </details>
@@ -117,7 +131,7 @@ kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic event_clean
 ```bash
 spark-submit \
  --class com.yen.DigestKafkaEmitKafka \
- target/scala-2.11/spark-app-assembly-1.0.jar
+ target/scala-2.11/spark-app-assembly-0.0.1.jar
 ```
 
 </details>
