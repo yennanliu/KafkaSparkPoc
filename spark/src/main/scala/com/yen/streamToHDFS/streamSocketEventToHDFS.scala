@@ -31,22 +31,13 @@ object streamSocketEventToHDFS extends App {
   // spark select as timestamp : https://sparkbyexamples.com/spark/spark-current-date-and-timestamp/
   val words = lines.select(
     expr("explode(split(value,' ')) as word"),
-    date_format(col("current_timestamp"),"HH:mm:ss.SSS").as("time")
+    date_format(col("current_timestamp"),"yyyy-MM-dd HH:mm:ss.SSS").as("time")
   )
-
-  val counts = words.groupBy("word").count()
-
-  val wordCountQuery = counts.writeStream
-    .format("console")
-    //.option("numRows", 2)
-    .outputMode("complete")
-    .option("checkpointLocation", "chk-point-dir") // set up the "checkpoint"
-    .start()
-
+  
   // save to HDFS
   // output format : https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#output-sinks
-  val countsDF = counts.toDF()
-
+  // query the data :
+  // hdfs dfs -ls spark/streamSocketEventToHDFS
   val wordCountQuery2 = words.writeStream
       .format("json")
       .option("checkpointLocation", "chk-point-dir2") // set up the "checkpoint"
@@ -55,5 +46,4 @@ object streamSocketEventToHDFS extends App {
 
   logger.info("Listening to localhost:9999")
   wordCountQuery2.awaitTermination()
-  wordCountQuery.awaitTermination()
 }
