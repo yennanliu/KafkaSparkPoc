@@ -41,7 +41,14 @@ object SimpleEvent_V1 extends App {
           val r = scala.util.Random
           val id = r.nextInt(10000000)
           val event_date = System.currentTimeMillis
-          val msg = "this is event !!!"
+
+          val someRandom = r.nextInt(10)
+
+          val msg:String = someRandom match {
+            case someRandom if someRandom % 2 == 0 => "hello yo !!!"
+            case someRandom if someRandom % 2 == 1 => "good day ~"
+            case _ => "wazzup ?"
+          }
 
           val payload = new simpleEvent(id, event_date, msg)
 
