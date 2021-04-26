@@ -3,8 +3,7 @@ package com.yen.streamSocketToHDFS
 /**
  *  streamSocketEventToHDFSV3
  *
- *  1) spark streaming json data from socket and make watermark, then group by then save (sink) to HDFS
- *  2)
+ *  1) spark streaming json data from socket and make watermark, then group by with window function then save (sink) to HDFS
  *  3) ref :  https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/dev/TumblingWindowDemo1.scala
  */
 
