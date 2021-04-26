@@ -15,11 +15,8 @@ package com.yen.streamSocketToHDFS
 // {"CreatedTime": "2019-02-05 10:12:00", "Type": "BUY", "Amount": 300, "BrokerCode": "ABX"}
 // {"CreatedTime": "2019-02-05 10:20:00", "Type": "BUY", "Amount": 800, "BrokerCode": "ABX"}
 
-import com.yen.streamSocketToHDFS.streamSocketEventToHDFSV2.spark
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.expressions.Window
-import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.Trigger
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 
@@ -69,6 +66,8 @@ object streamSocketEventToHDFSV3 extends App {
     .agg(sum("Buy").alias("TotalBuy"),
       sum("Sell").alias("TotalSell"))
 
+  val outputDF = windowAggDF
+    .select("window.start", "window.end", "TotalBuy", "TotalSell")
 
   println("----------- valueDF schema : -----------")
   valueDF.printSchema()
@@ -76,10 +75,6 @@ object streamSocketEventToHDFSV3 extends App {
   tradeDF.printSchema()
   println("----------- windowAggDF schema : -----------")
   windowAggDF.printSchema()
-
-  val outputDF = windowAggDF
-    .select("window.start", "window.end", "TotalBuy", "TotalSell")
-
   println("----------- outputDF schema : -----------")
   outputDF.printSchema()
 
@@ -90,7 +85,6 @@ object streamSocketEventToHDFSV3 extends App {
       window($"CreatedTime", "10 minutes", "5 minutes"),
       $"Buy")
     .count()
-
 
   //  val windowQuery = outputDF.writeStream
   //    .format("console")
@@ -108,5 +102,4 @@ object streamSocketEventToHDFSV3 extends App {
 
   logger.info("Counting Invoices")
   windowQuery.awaitTermination()
-
 }
