@@ -1,4 +1,4 @@
-package com.yen.streamToHDFS
+package com.yen.streamSocketToHDFS
 
 
 /**

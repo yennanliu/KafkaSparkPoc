@@ -6,7 +6,7 @@ package com.yen.dev
 // plz open the other terminal an run below command as socket first
 // nc -lk 9999
 
-import com.yen.streamToHDFS.streamSocketEventToHDFS.lines
+import com.yen.streamSocketToHDFS.streamSocketEventToHDFS.lines
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
