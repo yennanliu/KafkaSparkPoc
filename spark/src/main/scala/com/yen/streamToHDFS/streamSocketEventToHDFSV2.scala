@@ -1,6 +1,12 @@
 package com.yen.streamToHDFS
 
-// spark streaming from socket to HDFS
+
+/**
+ *  streamSocketEventToHDFSV2
+ *
+ *  1) spark streaming from socket and make new timestamp relative columns
+ *  2) window.start, window.end, last_ts, first_ts...
+ */
 
 // plz open the other terminal an run below command as socket first
 // nc -lk 9999

@@ -1,8 +1,13 @@
 package com.yen.streamToHDFS
 
 
-// spark streaming from socket to HDFS
-// https://github.com/yennanliu/Spark-Streaming-In-Scala/tree/master/01-StreamingWC
+/**
+ *  streamSocketEventToHDFS
+ *
+ *  1) spark streaming from socket to HDFS
+ *  2) data type : words (dataframe)
+ *  3) ref :   https://github.com/yennanliu/Spark-Streaming-In-Scala/tree/master/01-StreamingWC
+ */
 
 // plz open the other terminal an run below command as socket first
 // nc -lk 9999
