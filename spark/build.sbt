@@ -28,7 +28,10 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-text" % "1.8",
 
   // test
-  "org.scalatest" %% "scalatest" % "3.1.1" % "test"
+  "org.scalatest" %% "scalatest" % "3.1.1" % "test",
+
+  // google
+  "com.google.code.gson" % "gson" % "2.8.5"
 )
 
 conflictManager := ConflictManager.latestRevision
