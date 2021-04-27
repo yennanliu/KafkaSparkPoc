@@ -30,7 +30,7 @@ object streamSocketEventToHDFSV5 extends App {
 
   val eventSchema = StructType(List(
     StructField("id", IntegerType),
-    StructField("event_date", LongType),
+    StructField("event_date", StringType),
     StructField("msg", StringType)
   ))
 
