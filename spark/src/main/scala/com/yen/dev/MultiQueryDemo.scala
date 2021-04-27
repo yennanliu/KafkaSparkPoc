@@ -14,7 +14,7 @@ object MultiQueryDemo extends App{
 
   val spark = SparkSession.builder()
     .master("local[3]")
-    .appName("MultiQueryDemo")
+    .appName(this.getClass.getName)
     .config("spark.streaming.stopGracefullyOnShutdown", "true")
     .getOrCreate()
 

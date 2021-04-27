@@ -13,7 +13,7 @@ object TransformDemo1 extends App {
   // get sparkConf
   val sparkConf: SparkConf = new SparkConf()
     .setMaster("local[*]")
-    .setAppName("TransformDemo1")
+    .setAppName(this.getClass.getName)
 
   // get StreamingContext
   val ssc = new StreamingContext(sparkConf, Seconds(3))

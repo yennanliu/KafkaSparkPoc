@@ -14,7 +14,7 @@ object SparkBatchTest extends App{
 
   val spark = SparkSession
     .builder
-    .appName("SparkBatchTest")
+    .appName(this.getClass.getName)
     .master("local[*]")
     .getOrCreate()
 

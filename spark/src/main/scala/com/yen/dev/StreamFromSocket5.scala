@@ -23,7 +23,7 @@ object StreamFromSocket5 extends App {
 
   val spark = SparkSession.builder()
     .master("local[3]")
-    .appName("StreamFromSocket5")
+    .appName(this.getClass.getName)
     .config("spark.streaming.stopGracefullyOnShutdown", "true")
     .config("spark.sql.shuffle.partitions", 3)
     .getOrCreate()

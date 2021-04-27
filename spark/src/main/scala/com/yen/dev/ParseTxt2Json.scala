@@ -13,7 +13,7 @@ object ParseTxt2Json extends App{
 
   val spark = SparkSession
     .builder
-    .appName("SparkBatchTest")
+    .appName(this.getClass.getName)
     .master("local[*]")
     .getOrCreate()
 

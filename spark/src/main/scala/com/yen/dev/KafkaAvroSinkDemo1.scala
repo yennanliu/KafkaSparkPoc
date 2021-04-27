@@ -14,7 +14,7 @@ object KafkaAvroSinkDemo1 extends App{
 
   val spark = SparkSession.builder()
     .master("local[3]")
-    .appName("Kafka Avro Sink Demo")
+    .appName(this.getClass.getName)
     .config("spark.streaming.stopGracefullyOnShutdown", "true")
     .getOrCreate()
 

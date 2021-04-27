@@ -15,7 +15,7 @@ object SlidingWindowDemo extends App {
 
   val spark = SparkSession.builder()
     .master("local[3]")
-    .appName("SlidingWindowDemo")
+    .appName(this.getClass.getName)
     .config("spark.streaming.stopGracefullyOnShutdown", "true")
     .config("spark.sql.shuffle.partitions", 1)
     .getOrCreate()

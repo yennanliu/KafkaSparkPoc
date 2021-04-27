@@ -13,7 +13,7 @@ object StreamFromFile extends App{
 
   val sparkSession = SparkSession.builder
     .master("local")
-    .appName("StreamFromFile")
+    .appName(this.getClass.getName)
     .getOrCreate()
 
   val schema = StructType(

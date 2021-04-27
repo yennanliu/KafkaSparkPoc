@@ -16,7 +16,7 @@ object StreamDetailFromKafka extends App{
 
   val spark = SparkSession
     .builder
-    .appName("StreamDetailFromKafka")
+    .appName(this.getClass.getName)
     .master("local[*]")
     .config("spark.sql.warehouse.dir", "/temp") // Necessary to work around a Windows bug in Spark 2.0.0; omit if you're not on Windows.
     .getOrCreate()
