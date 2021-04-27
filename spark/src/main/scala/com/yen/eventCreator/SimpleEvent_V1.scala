@@ -3,7 +3,7 @@ package com.yen.eventCreator
 import java.io.PrintWriter
 import java.net.ServerSocket
 import java.util.Random
-import java.time.LocalDateTime
+import java.time.{LocalDateTime, LocalTime}
 
 import com.google.gson.Gson
 
@@ -27,7 +27,7 @@ object SimpleEvent_V1 extends App {
   val listener = new ServerSocket(port)
   println(s"Listening on port: $port")
 
-  case class simpleEvent(id: Int, event_date: Long, msg: String)
+  case class simpleEvent(id: Int, event_date: String, msg: String)
 
   while (true) {
     val socket = listener.accept()
@@ -40,7 +40,8 @@ object SimpleEvent_V1 extends App {
 
           val r = scala.util.Random
           val id = r.nextInt(10000000)
-          val event_date = System.currentTimeMillis
+          //val event_date = System.currentTimeMillis
+          val event_date = LocalDateTime.now()
 
           val someRandom = r.nextInt(10)
 
@@ -50,7 +51,7 @@ object SimpleEvent_V1 extends App {
             case _ => "wazzup ?"
           }
 
-          val payload = new simpleEvent(id, event_date, msg)
+          val payload = new simpleEvent(id, event_date.toString, msg)
 
           Thread.sleep(sleepDelayMs)
           val msgDataJson = new Gson().toJson(payload)
