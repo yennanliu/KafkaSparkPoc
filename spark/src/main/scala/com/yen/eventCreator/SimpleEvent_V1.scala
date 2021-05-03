@@ -6,6 +6,9 @@ import java.util.Random
 import java.time.{LocalDateTime, LocalTime}
 
 import com.google.gson.Gson
+import spray.json.DefaultJsonProtocol
+import spray.json.DefaultJsonProtocol._
+
 
 /**
  *  SimpleEvent_V1
@@ -27,7 +30,14 @@ object SimpleEvent_V1 extends App {
   val listener = new ServerSocket(port)
   println(s"Listening on port: $port")
 
+  /** case class for event, and transform to json */
+  // https://index.scala-lang.org/spray/spray-json/spray-json/1.2.5?target=_2.10
   case class simpleEvent(id: Int, event_date: String, msg: String)
+  object simpleEvent
+
+  object MyJsonProtocol extends DefaultJsonProtocol {
+    implicit val colorFormat = jsonFormat3(simpleEvent.apply)
+  }
 
   while (true) {
     val socket = listener.accept()
@@ -51,12 +61,17 @@ object SimpleEvent_V1 extends App {
             case _ => "wazzup ?"
           }
 
-          val payload = new simpleEvent(id, event_date.toString, msg)
+          import MyJsonProtocol._
+          import spray.json._
+
+          //val payload = new simpleEvent(id, event_date.toString, msg)
+
+          val json = new simpleEvent(id, event_date.toString, msg).toJson
+          val simpleEvent_ = json.convertTo[simpleEvent]
 
           Thread.sleep(sleepDelayMs)
-          val msgDataJson = new Gson().toJson(payload)
-          println("*** msgDataJson = " + msgDataJson.toString)
-          out.write(msgDataJson)
+          println("*** msgDataJson = " + simpleEvent_.toString)
+          out.write(simpleEvent_.toString)
           out.flush()
         }
         socket.close()

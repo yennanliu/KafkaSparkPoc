@@ -30,8 +30,9 @@ libraryDependencies ++= Seq(
   // test
   "org.scalatest" %% "scalatest" % "3.1.1" % "test",
 
-  // google
-  "com.google.code.gson" % "gson" % "2.8.5"
+  // json op
+  // https://index.scala-lang.org/spray/spray-json/spray-json/1.2.5?target=_2.10
+  "io.spray" %%  "spray-json" % "1.3.6"
 )
 
 conflictManager := ConflictManager.latestRevision
