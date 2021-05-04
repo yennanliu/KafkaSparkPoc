@@ -3,6 +3,7 @@ package com.yen.streamKafkaToHDFS
 // event source :
 // https://github.com/yennanliu/KafkaSparkPoc/blob/main/kafka/src/main/scala/com/yen/Producer/producerV1.scala
 
+import org.apache.hadoop.io.compress.BZip2Codec
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
 
@@ -45,11 +46,19 @@ object streamKafkaToHDFSV1 extends App {
   //    .start()
 
   // save into HDFS
+  //  val query = ToStreamDF.writeStream
+  //      .format("json")
+  //      .option("checkpointLocation", "chk-point-dir2")
+  //      .option("path", "streamKafkaToHDFSV1")
+  //      .start()
+
+  // save into HDFS with compression
   val query = ToStreamDF.writeStream
-      .format("json")
-      .option("checkpointLocation", "chk-point-dir2")
-      .option("path", "streamKafkaToHDFSV1")
-      .start()
+    .format("json")
+    .option("checkpointLocation", "chk-point-dir2")
+    .option("path", "streamKafkaToHDFSV1")
+    .option("compression", "org.apache.hadoop.io.compress.BZip2Codec") // https://sites.google.com/a/einext.com/einext_original/apache-spark/compress-output-files-in-spark
+    .start()
 
   logger.info("Listen from Kafka : 127.0.0.1:9092")
 

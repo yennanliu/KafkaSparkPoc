@@ -6,6 +6,7 @@ target/*
 
 # kafka
 kafka/project/target/*
+kafka/project/target/scala-2.12/*
 
 # spark
 spark/chk-point-dir/*
