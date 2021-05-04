@@ -39,20 +39,20 @@ object streamKafkaToHDFSV1 extends App {
 
   ToStreamDF.createOrReplaceTempView("to_stream")
 
-  // print out in console
+  /** V1 : print out in console */
   //  val query = ToStreamDF.writeStream
   //    .format("console")
   //    .option("checkpointLocation", "chk-point-dir2")
   //    .start()
 
-  // save into HDFS
+  /** V2 : save into HDFS */
   //  val query = ToStreamDF.writeStream
   //      .format("json")
   //      .option("checkpointLocation", "chk-point-dir2")
   //      .option("path", "streamKafkaToHDFSV1")
   //      .start()
 
-  // save into HDFS with compression
+  /** V3 : save into HDFS with compression */
   val query = ToStreamDF.writeStream
     .format("json")
     .option("checkpointLocation", "chk-point-dir2")
