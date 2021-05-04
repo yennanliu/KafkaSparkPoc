@@ -5,8 +5,6 @@ package com.yen.streamKafkaToHDFS
 
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions._
-import org.apache.spark.SparkContext
 
 object streamKafkaToHDFSV1 extends App {
 
@@ -40,10 +38,18 @@ object streamKafkaToHDFSV1 extends App {
 
   ToStreamDF.createOrReplaceTempView("to_stream")
 
+  // print out in console
+  //  val query = ToStreamDF.writeStream
+  //    .format("console")
+  //    .option("checkpointLocation", "chk-point-dir2")
+  //    .start()
+
+  // save into HDFS
   val query = ToStreamDF.writeStream
-    .format("console")
-    .option("checkpointLocation", "chk-point-dir2")
-    .start()
+      .format("json")
+      .option("checkpointLocation", "chk-point-dir2")
+      .option("path", "streamKafkaToHDFSV1")
+      .start()
 
   logger.info("Listen from Kafka : 127.0.0.1:9092")
 
