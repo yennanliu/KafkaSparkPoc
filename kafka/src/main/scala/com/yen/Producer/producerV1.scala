@@ -1,5 +1,12 @@
 package com.yen.Producer
 
+/**
+ *  Kafka producer that emit simple event
+ *
+ *  // Spark stream app :
+ *  // https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/streamKafkaToHDFS/streamKafkaToHDFSV1.scala
+ */
+
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
 import java.util.{Date, Properties}
 import scala.util.Random

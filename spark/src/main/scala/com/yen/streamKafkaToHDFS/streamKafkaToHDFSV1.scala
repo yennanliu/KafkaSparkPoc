@@ -1,7 +1,14 @@
 package com.yen.streamKafkaToHDFS
 
-// event source :
-// https://github.com/yennanliu/KafkaSparkPoc/blob/main/kafka/src/main/scala/com/yen/Producer/producerV1.scala
+/**
+ *  Spark stream process Kafka event can
+ *  1) print in console
+ *  2) sink (save) to HDFS
+ *  3) sink (save) to HDFS with bzip2 compression
+ *
+ * // event source :
+ * // https://github.com/yennanliu/KafkaSparkPoc/blob/main/kafka/src/main/scala/com/yen/Producer/producerV1.scala
+ */
 
 import org.apache.hadoop.io.compress.BZip2Codec
 import org.apache.log4j.Logger

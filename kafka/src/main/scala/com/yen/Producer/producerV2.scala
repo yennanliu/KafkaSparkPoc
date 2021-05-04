@@ -1,5 +1,9 @@
 package com.yen.Producer
 
+/**
+ *  Kafka producer that emit event with different topics
+ */
+
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
 import java.util.{Date, Properties}
 import scala.util.Random
