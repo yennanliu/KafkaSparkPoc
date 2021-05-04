@@ -18,18 +18,28 @@ object producerV1 extends App {
 
   case class msg(id:Int, time:String, msg:String)
 
-  val id = Random.nextInt(1000)
-  val runtime = new Date().getTime().toString
+  def make_msg_body(n: Integer): String = n match {
+    case _ if n % 3 == 0 => "hello worlddddddd"
+    case _ if n % 3 == 1 => "???!!! ..???  !! @@ ??"
+    case _ if n % 3 == 2 => "wazz up !!!!!!!"
+    case _ => "hi there ~"
+  }
+
   var n = 0
 
   while (true){
+
+    val id = Random.nextInt(1000)
+    val runtime = new Date().getTime().toString
+
     n += 1
-    msg(id, runtime, "this is msg !!!")
+
+    val event_msg = msg(id, runtime, make_msg_body(id))
     //println(s"*** msg = $msg")
 
     // need to put "topic" as 1st argument
-    val data = new ProducerRecord[String, String](topic, s"runtime : $runtime , msg : $msg")
-    println(s"*** sending $n data to receiver | data : $data")
+    val data = new ProducerRecord[String, String](topic, s"runtime : $runtime , msg : $event_msg")
+    println(s"*** sending $n data : $data")
     producer.send(data)
     Thread.sleep(1000) // wait for 1000 millisecond
   }
