@@ -1,12 +1,20 @@
-# KafkaSparkPoc
-- Build some stream POC processings via Kafka & Spark
-- [Spark](./spark) : main Spark code
-- [Kafka](./kafka) : main Kafka code
-- Tech stack
-	- Scala, Spark, Kafka
+<h1 align="center">KafkaSparkPoc</h1>
+<h4 align="center">Kafka-spark POC project for streaming</h4>
+
+<p align="center">
+
+## Intro
+- Projects
+	- [Spark](./spark) : Spark application code
+	- [Kafka](./kafka) : Kafka application code
+- programming langyage
+	- Scala, Java
+- Framework
+	- Spark, Kafka
 - Build tool
 	- SBT
-- IDE : IntellJ
+- IDE
+	- IntellJ
 
 ## Run Basic examples
 
@@ -137,6 +145,10 @@ spark-submit \
 </details>
 
 ## Ref
+
+<details>
+<summary>Ref</summary>
+	
 - Tutorial & example code
 	- https://github.com/LearningJournal/Spark-Streaming-In-Scala
 	- https://www.udemy.com/course/apache-spark-streaming-in-scala/
@@ -149,3 +161,5 @@ spark-submit \
 
 - Online scala code formatter
 	- https://scastie.scala-lang.org/
+
+</details>
