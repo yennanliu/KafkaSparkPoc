@@ -4,6 +4,7 @@
 <p align="center">
 
 ## Intro
+
 - Projects
 	- [Spark](./spark) : Spark application code
 	- [Kafka](./kafka) : Kafka application code
@@ -16,16 +17,64 @@
 - IDE
 	- IntellJ
 
+## Structure
+
+```
+├── Makefile      - kafka help commands
+├── README.md
+├── data          - sample data for app demo
+├── doc           - collection of project docs
+├── exampleCode   - external spark stream example code
+├── kafka         - Kafka application source code
+├── kafkaJava     - Kafka application source code (Java)
+├── mk.d
+├── script        - helper scripts
+├── spark         - Spark application source code
+```
+
+## Build
+
+<details>
+<summary>Build</summary>
+
+```bash
+# build spark project
+cd spark
+sbt clean asembly
+
+# build kafka project
+cd kafka
+sbt clean assembly
+```
+</details>
+
+## Prerequisites
+
+<details>
+<summary>Prerequisites</summary>
+
+- Install
+	- Java JDK 1.8
+	- Scala
+	- Spark
+	- sbt
+	- Kafka
+	- HDFS (optional)
+
+```bash
+# launch kafka
+make run_kz
+
+# create kafka topic
+kafka-topics --create -zookeeper localhost:2181 --replication-factor 1  --partitions 1 --topic <new_topic>
+```
+
+</details>
+
 ## Run Basic examples
 
 <details>
 <summary>Run Basic examples</summary>
-
-```bash
-# build 
-sbt clean compile
-sbt clean assembly
-```
 
 #### 1. [StreamFromKafkaWithSchema](./spark/src/main/scala/com/yen/dev/StreamFromKafkaWithSchema1.scala)
 - Spark stream from  Kafka with Schema and write back to Kafka
