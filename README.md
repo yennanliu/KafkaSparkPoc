@@ -1,14 +1,21 @@
 <h1 align="center">KafkaSparkPoc</h1>
-<h4 align="center">Kafka-spark POC project for streaming</h4>
+<h4 align="center">Kafka-Spark streaming POC project</h4>
 
 <p align="center">
 
 ## Intro
 
+- Scopes
+	- Kafka -> Spark
+	- Kafka -> Spark -> Kafka
+	- Kafka -> Kafka -> Spark
+	- Kafka -> Spark -> HDFS
+	- Spark -> Kafka
+
 - Projects
 	- [Spark](./spark) : Spark application code
 	- [Kafka](./kafka) : Kafka application code
-- programming langyage
+- programming language
 	- Scala, Java
 - Framework
 	- Spark, Kafka
