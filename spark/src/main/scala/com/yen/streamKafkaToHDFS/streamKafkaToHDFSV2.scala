@@ -37,28 +37,32 @@ object streamKafkaToHDFSV2 extends App {
     .readStream
     .format("kafka")
     .option("kafka.bootstrap.servers", bootStrapServers)
-    .option("subscribe",topic) // https://spark.apache.org/docs/2.2.0/structured-streaming-kafka-integration.html
+    .option("subscribe",topic) // subscribe multiple topics : https://spark.apache.org/docs/2.2.0/structured-streaming-kafka-integration.html
     .load()
 
-  val tmpStreamDF = streamDF.selectExpr("CAST(value AS STRING)")
+  val tmpStreamDF = streamDF.selectExpr(
+    "topic", // select topic as col
+    "CAST(key AS STRING)",
+    "CAST(value AS STRING)"
+  )
 
   val ToStreamDF = tmpStreamDF
-    .select("value")
+    .select("topic", "key", "value")
 
-  ToStreamDF.createOrReplaceTempView("to_stream")
+  //ToStreamDF.createOrReplaceTempView("to_stream")
 
   /** V1 : print out in console */
-  //    val query = ToStreamDF.writeStream
-  //      .format("console")
-  //      .option("checkpointLocation", "chk-point-dir2")
-  //      .start()
+  val query = ToStreamDF.writeStream
+        .format("console")
+        .option("checkpointLocation", "chk-point-dir2")
+        .start()
 
   /** V2 : save into HDFS */
-  val query = ToStreamDF.writeStream
-        .format("json")
-        .option("checkpointLocation", "chk-point-dir2")
-        .option("path", s"streamKafkaToHDFSV1/$topic")
-        .start()
+  //  val query = ToStreamDF.writeStream
+  //        .format("json")
+  //        .option("checkpointLocation", "chk-point-dir2")
+  //        .option("path", s"streamKafkaToHDFSV1/$topic")
+  //        .start()
 
   /** V3 : save into HDFS with compression */
   //  val query = ToStreamDF.writeStream

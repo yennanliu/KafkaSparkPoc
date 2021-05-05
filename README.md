@@ -63,7 +63,7 @@ sbt clean assembly
 - Install
 	- Java JDK 1.8
 	- Scala
-	- Spark
+	- Spark 2.X
 	- sbt
 	- Kafka
 	- HDFS (optional)
