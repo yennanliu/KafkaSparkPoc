@@ -47,30 +47,34 @@ object streamKafkaToHDFSV2 extends App {
   )
 
   val ToStreamDF = tmpStreamDF
-    .select("topic", "key", "value")
+    .select("topic","key", "value")
 
   //ToStreamDF.createOrReplaceTempView("to_stream")
 
   /** V1 : print out in console */
-  val query = ToStreamDF.writeStream
-        .format("console")
-        .option("checkpointLocation", "chk-point-dir2")
-        .start()
-
-  /** V2 : save into HDFS */
   //  val query = ToStreamDF.writeStream
-  //        .format("json")
+  //        .format("console")
   //        .option("checkpointLocation", "chk-point-dir2")
-  //        .option("path", s"streamKafkaToHDFSV1/$topic")
   //        .start()
 
+  /** V2 : save into HDFS */
+  //   val query = ToStreamDF
+  //          .writeStream
+  //          .partitionBy("topic") // save data partition by column : http://spark.apache.org/docs/2.1.1/api/java/org/apache/spark/sql/streaming/DataStreamWriter.html
+  //          .format("json")
+  //          .option("checkpointLocation", "chk-point-dir2")
+  //          .option("path", s"streamKafkaToHDFSV1")
+  //          .start()
+
   /** V3 : save into HDFS with compression */
-  //  val query = ToStreamDF.writeStream
-  //    .format("json")
-  //    .option("checkpointLocation", "chk-point-dir2")
-  //    .option("path", "streamKafkaToHDFSV1")
-  //    .option("compression", "org.apache.hadoop.io.compress.BZip2Codec") // https://sites.google.com/a/einext.com/einext_original/apache-spark/compress-output-files-in-spark
-  //    .start()
+    val query = ToStreamDF
+      .writeStream
+      .partitionBy("topic")
+      .format("json")
+      .option("checkpointLocation", "chk-point-dir2")
+      .option("path", "streamKafkaToHDFSV1")
+      .option("compression", "org.apache.hadoop.io.compress.BZip2Codec") // https://sites.google.com/a/einext.com/einext_original/apache-spark/compress-output-files-in-spark
+      .start()
 
   logger.info("Listen from Kafka : 127.0.0.1:9092")
 
