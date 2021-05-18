@@ -218,4 +218,9 @@ spark-submit \
 - Online scala code formatter
 	- https://scastie.scala-lang.org/
 
+- Kafka
+	- [Kafka Consumer multi-threaded instance](https://www.programmersought.com/article/11854192236/)
+	- [offsetsForTimes in kafka java api](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#offsetsForTimes-java.util.Map-)
+	- [Java Code Examples for org.apache.kafka.clients.consumer.KafkaConsumer#seek()](https://www.programcreek.com/java-api-examples/?class=org.apache.kafka.clients.consumer.KafkaConsumer&method=seek)
+
 </details>
