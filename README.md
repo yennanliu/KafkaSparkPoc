@@ -11,6 +11,11 @@
 	- Kafka -> Kafka -> Spark
 	- Kafka -> Spark -> HDFS
 	- Spark -> Kafka
+	- Spark
+		- reduceByKey & groupByKey
+		- aggregateByKey
+		- foldByKey
+		- combineByKey
 
 - Projects
 	- [Spark](./spark) : Spark application code
