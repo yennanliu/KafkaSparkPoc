@@ -2,37 +2,27 @@
 version := "0.0.1"
 organization:= "com.yen"
 name := "spark-app"
+scalaVersion := "2.12.12"
 
-scalaVersion := "2.11.8"
-
-val sparkVersion = "2.4.3"
-
+lazy val versions = new {
+  val spark = "3.0.1"
+  val log4j = "1.7.25"
+  val typesafeConfig = "1.4.0"
+  val json4s = "3.6.0"
+  val scalaTest = "3.0.3"
+}
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= Seq(
-  // spark-core
-  "com.typesafe" % "config" % "1.2.1", 
-  "org.apache.spark" %% "spark-core" % sparkVersion,
-  "org.scalactic" %% "scalactic" % "3.1.0",
-  "org.apache.spark" %% "spark-sql" % sparkVersion,
-  "com.databricks" %% "spark-csv" % "1.4.0",
-
-  // spark stream 
-   "org.apache.spark" %% "spark-streaming" % sparkVersion,
-   "org.apache.spark" %% "spark-sql-kafka-0-10" % sparkVersion,
-
-  // spark-avro
-  "org.apache.spark" %% "spark-avro" % sparkVersion,
-
-  // others 
-  "org.apache.commons" % "commons-text" % "1.8",
-
-  // test
-  "org.scalatest" %% "scalatest" % "3.1.1" % "test",
-
-  // json op
-  // https://index.scala-lang.org/spray/spray-json/spray-json/1.2.5?target=_2.10
-  "io.spray" %%  "spray-json" % "1.3.6"
+  "org.apache.spark" %% "spark-core" % versions.spark % "provided",
+  "org.apache.spark" %% "spark-sql" % "3.0.1" % "provided",
+  "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.0.1" % Test,
+  "org.apache.spark" %% "spark-streaming" % "3.0.1" % "provided",
+  "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.0.1",
+  "org.slf4j" % "slf4j-api" % versions.log4j,
+  "com.typesafe" % "config" % versions.typesafeConfig,
+  "org.json4s" %% "json4s-native" % versions.json4s,
+  "org.scalatest" %% "scalatest" % versions.scalaTest % Test
 )
 
 conflictManager := ConflictManager.latestRevision
