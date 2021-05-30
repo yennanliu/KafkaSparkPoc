@@ -26,17 +26,37 @@
 ## Scope (Spark)
 <details>
 <summary>Spark</summary>
-		
-		- Transformation
-			- reduceByKey
-				- aggregate on key, it has a `pre combine` step before shuffle, return type : RDD[k,v]
-			- groupByKey
-				- group by key, and shuffle directly
-				- reduceByKey is more preferable than groupByKey in general cases, but still need to consider biz requirements
-			- aggregateByKey
-			- foldByKey
-			- combineByKey
-		- Action
+	
+- Transformation
+	- key-value
+		- partitionedBy
+		- reduceByKey
+			- aggregate on key, it has a `pre combine` step before shuffle, return type : RDD[k,v]
+		- groupByKey
+			- group by key, and shuffle directly
+			- reduceByKey is more preferable than groupByKey in general cases, but still need to consider biz requirements
+		- aggregateByKey
+		- foldByKey
+		- combineByKey
+		- sortedByKey
+		- join
+		- cogroup
+- Action
+	- reduce(func)
+		- via func aggregate records in same partition, then aggregate records across partitions
+	- collect
+	- count
+	- first
+	- take(n)
+	- takeOrdered(n)
+	- aggregate
+	- fold(num)(func)
+	- saveAsTextFile
+	- saveAsSequenceFile
+	- saveAsObjectFile
+	- countByKey
+	- foreach(func)
+
 </details>
 
 ## Structure
