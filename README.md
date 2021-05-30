@@ -4,7 +4,17 @@
 <p align="center">
 
 ## Intro
-
+- Projects
+	- [Spark](./spark) : Spark application code
+	- [Kafka](./kafka) : Kafka application code
+- programming language
+	- Scala, Java
+- Framework
+	- Spark, Kafka
+- Build tool
+	- SBT
+- IDE
+	- IntellJ
 
 ## Scope (Kafka - Spark)
 	- Kafka -> Spark
@@ -28,18 +38,6 @@
 			- combineByKey
 		- Action
 </details>
-
-- Projects
-	- [Spark](./spark) : Spark application code
-	- [Kafka](./kafka) : Kafka application code
-- programming language
-	- Scala, Java
-- Framework
-	- Spark, Kafka
-- Build tool
-	- SBT
-- IDE
-	- IntellJ
 
 ## Structure
 
