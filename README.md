@@ -5,14 +5,15 @@
 
 ## Intro
 
-- Scopes (Kafka - Spark)
+
+## Scope (Kafka - Spark)
 	- Kafka -> Spark
 	- Kafka -> Spark -> Kafka
 	- Kafka -> Kafka -> Spark
 	- Kafka -> Spark -> HDFS
 	- Spark -> Kafka
 
-- Scopes (Spark)
+## Scope (Spark)
 <details>
 <summary>Spark</summary>
 		
