@@ -12,7 +12,11 @@
 	- Kafka -> Spark -> HDFS
 	- Spark -> Kafka
 	- Spark
-		- reduceByKey & groupByKey
+		- reduceByKey
+			- aggregate on key, it has a `pre combine` step before shuffle, return type : RDD[k,v]
+		- groupByKey
+			- group by key, and shuffle directly
+			- reduceByKey is more preferable than groupByKey in general cases, but still need to consider biz requirements
 		- aggregateByKey
 		- foldByKey
 		- combineByKey
