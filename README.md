@@ -6,20 +6,28 @@
 ## Intro
 
 - Scopes
-	- Kafka -> Spark
-	- Kafka -> Spark -> Kafka
-	- Kafka -> Kafka -> Spark
-	- Kafka -> Spark -> HDFS
-	- Spark -> Kafka
+	- Kafka - Spark
+		- Kafka -> Spark
+		- Kafka -> Spark -> Kafka
+		- Kafka -> Kafka -> Spark
+		- Kafka -> Spark -> HDFS
+		- Spark -> Kafka
+
 	- Spark
-		- reduceByKey
-			- aggregate on key, it has a `pre combine` step before shuffle, return type : RDD[k,v]
-		- groupByKey
-			- group by key, and shuffle directly
-			- reduceByKey is more preferable than groupByKey in general cases, but still need to consider biz requirements
-		- aggregateByKey
-		- foldByKey
-		- combineByKey
+<details>
+<summary>Spark</summary>
+		
+		- Transformation
+			- reduceByKey
+				- aggregate on key, it has a `pre combine` step before shuffle, return type : RDD[k,v]
+			- groupByKey
+				- group by key, and shuffle directly
+				- reduceByKey is more preferable than groupByKey in general cases, but still need to consider biz requirements
+			- aggregateByKey
+			- foldByKey
+			- combineByKey
+		- Action
+</details>
 
 - Projects
 	- [Spark](./spark) : Spark application code
