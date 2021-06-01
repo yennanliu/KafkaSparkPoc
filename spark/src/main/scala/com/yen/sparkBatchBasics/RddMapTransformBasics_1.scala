@@ -41,6 +41,6 @@ object RddMapTransformBasics_1 extends App {
    */
   val rdd3 = sc.parallelize(List("hello","world","good","morning", "good"))
   val pairRdd3 = rdd3.map(x => (x,1))
-  val r3 = pairRdd3.reduceByKey((x,y) => x +y)
+  val r3 = pairRdd3.reduceByKey((x,y) => x + y)
   r3.foreach(println(_))
 }
