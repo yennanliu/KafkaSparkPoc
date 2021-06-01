@@ -17,8 +17,20 @@ object RddMapTransformBasics_1 extends App {
 
   pairRdd1.foreach(println(_))
 
-  println("=======  demo 2 : reduceByKey ============")
-  // demo 2 : reduceByKey
+  println("=======  demo 2 : groupByKey ============")
+  /**
+   * groupByKey
+   *
+   * This transformation groups all the rows with the same key into a single row.
+   * The number of rows in the resulting RDD will be the same as the number
+   * of rows of unique keys in the input RDD.
+   */
+  val rdd2 = sc.parallelize(List("hello","world","good","morning", "good"))
+  val pairRdd2 = rdd2.map(x => (x,1))
+  val r2 = pairRdd2.groupByKey()
+  r2.foreach(println(_))
+
+  println("=======  demo 3 : reduceByKey ============")
   /**
    *  reduceByKey
    *  - This transformation reduce all the values of the same key to a single value.
@@ -27,8 +39,8 @@ object RddMapTransformBasics_1 extends App {
    *  1) Group the values of the same key.
    *  2) Apply the reduce function to the list of values of each key.
    */
-  val rdd6 = sc.parallelize(List("hello","world","good","morning", "good"))
-  val pairRdd6 = rdd6.map(x => (x,1))
-  val r6 = pairRdd6.reduceByKey((x,y) => x +y)
-  r6.foreach(println(_))
+  val rdd3 = sc.parallelize(List("hello","world","good","morning", "good"))
+  val pairRdd3 = rdd3.map(x => (x,1))
+  val r3 = pairRdd3.reduceByKey((x,y) => x +y)
+  r3.foreach(println(_))
 }
