@@ -58,12 +58,7 @@ object RddMapTransformBasics_3 extends App {
         tmp}
       .reduceByKey((x,y) => x + y)
   }
-
-  //val r2 = rdd1.map( tmpOp3)
-  //
-  //  rdd1.filter(x => x.id == "001")
-  //    .map{x =>
-  //      val tmp = ( (x.id, x.msg), 1)
-  //      tmp
-  //    }.reduceByKey((x,y) => x + y)
+  
+  val r3 = tmpOp3(rdd1)
+  println(r3.foreach(println(_)))
 }
