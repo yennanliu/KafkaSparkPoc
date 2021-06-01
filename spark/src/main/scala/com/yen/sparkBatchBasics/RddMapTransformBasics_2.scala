@@ -1,50 +1,31 @@
 package com.yen.sparkBatchBasics
 
 import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
-import org.apache.spark.rdd.RDD._
-
-import scala.util.Random
+import org.apache.spark.rdd.RDD
 
 object RddMapTransformBasics_2 extends App {
 
   val sc = new SparkContext("local[*]", "RddMapTransformBasics_2")
 
-  case class myEvent (
-    id: String,
-    timestamp: Long,
-    msg: String
-  )
+  val data1 = Array("a", "b", "c", "a", "b", "c", "x")
+  val rdd1 = sc.parallelize(data1)
 
-  val event1 = myEvent("001", System.currentTimeMillis(), "hello !!!")
-  val event2 = myEvent("001", System.currentTimeMillis() + Random.nextInt(), "world ~~~~")
-  val event3 = myEvent("002", System.currentTimeMillis() + Random.nextInt() , "?? xxx ttt")
-  val event4 = myEvent("003", System.currentTimeMillis() + Random.nextInt(), "errrrrr")
-
-  val events = List(event1,event2, event3, event4)
-
-  val rdd1 = sc.parallelize(events)
   rdd1.foreach(println(_))
 
-  println("============ example 1 ============")
+  println("=======  demo 1 : transform RDD to k,v RDD, and reduceByKey ============")
 
-  val pairRdd1 = rdd1.map{x =>
-    val tmp = (x.id, 1)
-    tmp
-  }
-  val r1 = pairRdd1.reduceByKey((x,y) => x + y)
+  val pairRdd1 = rdd1.map(x => (x,1))
+  val r1 = pairRdd1.reduceByKey((x,y) => x +y )
   r1.foreach(println(_))
 
+  println("=======  demo 2 : redo above via methid ============")
 
-  println("============ example 2 ============")
-
-  val pairRdd2 = rdd1
-    .filter(x => x.id == "001")
-    .map{x =>
-    val tmp = ( (x.id, x.msg), 1)
-    tmp
+  def func1(rdd: RDD[String]) = {
+    val r = rdd.map(x => (x,1))
+      .reduceByKey((x,y) => x + y)
+    r
   }
 
-  val r2 = pairRdd2.reduceByKey((x,y) => x + y)
+  val r2 = func1(rdd1)
   r2.foreach(println(_))
 }
