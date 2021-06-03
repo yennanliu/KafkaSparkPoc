@@ -15,7 +15,8 @@ object producerV3 {
 
   val producer = new KafkaProducer[String, String](props)
 
-  case class log(logData: String)
+  //case class log(logData: String)
+  case class log(logData: Array[Any])
 
   case class msg(id:Int, time:String, msg:String, log:log)
 
@@ -53,7 +54,7 @@ object producerV3 {
 
     n += 1
 
-    val event_msg = msg(id, runtime, make_msg_body(id), log(make_log_body(id)))
+    val event_msg = msg(id, runtime, make_msg_body(id), log(Array(make_log_body(id), Array("xxx"))))
     //println(s"*** msg = $msg")
 
     // need to put "topic" as 1st argument
