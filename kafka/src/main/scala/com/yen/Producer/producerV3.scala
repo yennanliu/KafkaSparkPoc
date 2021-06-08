@@ -4,7 +4,7 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, Produce
 import java.util.{Date, Properties}
 import scala.util.Random
 
-object producerV3 {
+object producerV3 extends App {
 
   val brokers = "127.0.0.1:9092"
   val props = new Properties()
