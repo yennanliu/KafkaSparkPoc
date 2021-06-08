@@ -13,7 +13,7 @@ package com.yen.streamKafkaToHDFS
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
 
-object streamKafkaToHDFSV3 {
+object streamKafkaToHDFSV3 extends App {
 
   @transient lazy val logger: Logger = Logger.getLogger(getClass.getName)
 
@@ -43,4 +43,13 @@ object streamKafkaToHDFSV3 {
 //    "CAST(key AS STRING)",
 //    "CAST(value AS STRING)"
 //  )
+
+
+  /** V1 : print out in console */
+    val query = streamDF.writeStream
+          .format("console")
+          .option("checkpointLocation", "chk-point-dir2")
+          .start()
+
+  query.awaitTermination()
 }
