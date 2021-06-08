@@ -37,19 +37,26 @@ object streamKafkaToHDFSV3 extends App {
     .option("subscribe",topic) // subscribe multiple topics : https://spark.apache.org/docs/2.2.0/structured-streaming-kafka-integration.html
     .load()
 
-//
-//  val tmpStreamDF = streamDF.selectExpr(
-//    "topic", // select topic as col
-//    "CAST(key AS STRING)",
-//    "CAST(value AS STRING)"
-//  )
-
+  val tmpStreamDF = streamDF.selectExpr(
+    "topic", // select topic as col
+    "CAST(key AS STRING)",
+    "CAST(value AS STRING)"
+  )
 
   /** V1 : print out in console */
-    val query = streamDF.writeStream
-          .format("console")
-          .option("checkpointLocation", "chk-point-dir2")
-          .start()
+  //    val query = tmpStreamDF.writeStream
+  //          .format("console")
+  //          .option("checkpointLocation", "chk-point-dir2")
+  //          .start()
+
+  /** V2 : save into HDFS */
+     val query = tmpStreamDF
+            .writeStream
+            .partitionBy("topic") // save data partition by column : http://spark.apache.org/docs/2.1.1/api/java/org/apache/spark/sql/streaming/DataStreamWriter.html
+            .format("json")
+            .option("checkpointLocation", "chk-point-dir2")
+            .option("path", s"streamKafkaToHDFSV3")
+            .start()
 
   query.awaitTermination()
 }
