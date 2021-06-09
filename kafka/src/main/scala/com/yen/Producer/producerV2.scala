@@ -2,6 +2,9 @@ package com.yen.Producer
 
 /**
  *  Kafka producer that emit event with different topics
+ *
+ * // Spark stream app :
+ * // https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/streamKafkaToHDFS/streamKafkaToHDFSV3.scala
  */
 
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}

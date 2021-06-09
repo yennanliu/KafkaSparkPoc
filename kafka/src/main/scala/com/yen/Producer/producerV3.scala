@@ -1,5 +1,12 @@
 package com.yen.Producer
 
+/**
+ *  Kafka producer that emit event with different topics and with CASE CLASS object
+ *
+ * // Spark stream app :
+ * // https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/streamKafkaToHDFS/streamKafkaToHDFSV3.scala
+ */
+
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
 import java.util.{Date, Properties}
 import scala.util.Random
@@ -16,9 +23,10 @@ object producerV3 extends App {
   val producer = new KafkaProducer[String, String](props)
 
   //case class log(logData: String)
-  case class log(logData: Array[Any])
+  //case class log(logData: Array[Any])
 
-  case class msg(id:Int, time:String, msg:String, log:log)
+  //case class msg(id:Int, time:String, msg:String, log:log)
+  case class msg(id:Int, time:String, msg:String)
 
 
   def make_msg_body(n: Int): String = n match {
@@ -54,7 +62,7 @@ object producerV3 extends App {
 
     n += 1
 
-    val event_msg = msg(id, runtime, make_msg_body(id), log(Array(make_log_body(id), Array("xxx"))))
+    val event_msg = msg(id, runtime, make_msg_body(id))
     //println(s"*** msg = $msg")
 
     // need to put "topic" as 1st argument
