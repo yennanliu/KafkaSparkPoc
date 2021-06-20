@@ -28,6 +28,25 @@
 <summary>Spark</summary>
 	
 - Transformation
+	- value
+		- map : 
+			- implement single data point
+		- mapPartitions : 
+			- implement on data points in the `SAME` partition, may cause OOM
+			- good to use when have large memory -> better efficiency
+		- mapPartitionsWithIndex
+		- flatMap
+			- similiar to map, but every input element will be "merged" as an `array`
+		- glom
+			- make every partition as an array, and form a RDD with type RDD[Array[T]] 
+		- groupBy
+			- group based on input func, and put values with same key into the same iterator
+		- filter
+		- sample
+		- distinct
+		- coalesce
+		- repartition
+		- sortBy
 	- key-value
 		- partitionedBy
 		- reduceByKey
