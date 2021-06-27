@@ -65,7 +65,7 @@ object aggregateByKey1 extends App {
    *   reduceByKey :
    *       -> v, func, func, partitioner
    *       -> no init value, use v as init value
-   *       -> use func twice, in partition and with partition
+   *       -> use func twice, in partition and within partition
    */
 
   // get max value per key in SAME PARTITION, then sum them up
