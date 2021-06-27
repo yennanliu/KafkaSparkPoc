@@ -50,7 +50,24 @@ object aggregateByKey1 extends App {
    *   // zeroValue : init value for EACH key in EACH partition
    *   // seqOp :  func implements  inside partition, start with init value
    *   // combOp : func implements when aggregate results from ALL partition
+   *
+   *   4) reduceByKey definition :
+   *
+   *    def reduceByKey(func: (V, V) => V): RDD[(K, V)] = self.withScope {
+   *     reduceByKey(defaultPartitioner(self), func)
+   *     }
+   *
+   *   5) **** aggregateByKey VS reduceByKey
+   *    aggregateByKey :
+   *      -> cleanedSepOp[V](createZero(), v), SeqOp, combOp, partitioner)
+   *      -> has "pre combine" op : SeqOp
+   *      -> has init value
+   *   reduceByKey :
+   *       -> v, func, func, partitioner
+   *       -> no init value, use v as init value
+   *       -> use func twice, in partition and with partition
    */
+
   // get max value per key in SAME PARTITION, then sum them up
   // init value per key : 0                         ((zeroValue: U))
   // in partition op : (u,v) => math.max(u,v)       ((U, V) => U)  (seqOp)
@@ -67,6 +84,8 @@ object aggregateByKey1 extends App {
   val r2 = rdd1.aggregateByKey(0)((u,v) => u+v, (u1,u2) => u1+u2).collect()
   println("r2 = " + r2.toList)
 
+  val r2_ = rdd1.aggregateByKey(0)(_+_, _+_).collect()  // same as above
+
   println("=================")
 
   /**
@@ -74,4 +93,6 @@ object aggregateByKey1 extends App {
    */
   val r3 = rdd1.reduceByKey((x,y) => x+y).collect()
   println("r3 = " + r3.toList)
+
+  val r3_ = rdd1.reduceByKey(_+_).collect() // same as above
 }
