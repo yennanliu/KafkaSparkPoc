@@ -3,6 +3,7 @@ package com.yen.sparkBatchBasics
 import org.apache.spark.SparkContext
 
 // https://www.youtube.com/watch?v=T5dlY-Wgg2Q&list=PLmOn9nNkQxJF-qlCCDx9WsdAe6x5hhH77&index=43
+// https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/doc/pic/aggregateByKey1.png
 
 object aggregateByKey1 extends App {
 
@@ -22,7 +23,8 @@ object aggregateByKey1 extends App {
    *  1) format : rdd1.aggregateByKey(init value per key)(op inside partition, op within partition)
    *
    *  2) Steps :
-   *    2-1) init value per key : 0
+   *
+   *    2-1) init value for EACH key in EACH partition : 0
    *    2-2) in partition op : (u,v) => math.max(u,v)
    *         partition 1:
    *           -> for a : 0, max(0,3) = 3, max(3,2) = 3
@@ -36,18 +38,40 @@ object aggregateByKey1 extends App {
    *          -> for b: 3
    *          -> for c : 4+8 = 12
    *
+   *    ref : https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/doc/pic/aggregateByKey1.png
+   *
    *  3) aggregateByKey definition :
    *
    *   def aggregateByKey[U: ClassTag](zeroValue: U)(seqOp: (U, V) => U,
    *       combOp: (U, U) => U): RDD[(K, U)] = self.withScope {
    *       aggregateByKey(zeroValue, defaultPartitioner(self))(seqOp, combOp)
    *      }
+   *
+   *   // zeroValue : init value for EACH key in EACH partition
+   *   // seqOp :  func implements  inside partition, start with init value
+   *   // combOp : func implements when aggregate results from ALL partition
    */
   // get max value per key in SAME PARTITION, then sum them up
   // init value per key : 0                         ((zeroValue: U))
-  // in partition op : (u,v) => math.max(u,v)       ((U, V) => U)
-  // within partition op :  (u1,u2) => u1+u2        ((U, U) => U)
+  // in partition op : (u,v) => math.max(u,v)       ((U, V) => U)  (seqOp)
+  // within partition op :  (u1,u2) => u1+u2        ((U, U) => U) (combOp)
   val r1 = rdd1.aggregateByKey(0)((u,v) => math.max(u,v), (u1,u2) => u1+u2).collect()
 
   println("r1 = " + r1.toList)
+
+  println("=================")
+
+  /**
+   * demo2 :  wordcount via aggregateByKey
+   */
+  val r2 = rdd1.aggregateByKey(0)((u,v) => u+v, (u1,u2) => u1+u2).collect()
+  println("r2 = " + r2.toList)
+
+  println("=================")
+
+  /**
+   * demo3 : wordcount via reduceByKey
+   */
+  val r3 = rdd1.reduceByKey((x,y) => x+y).collect()
+  println("r3 = " + r3.toList)
 }
