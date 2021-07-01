@@ -51,13 +51,16 @@
 		- partitionedBy
 		- reduceByKey
 			- aggregate on key, it has a `pre combine` step before shuffle, return type : RDD[k,v]
-			- [reduceByKey1](https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/sparkBatchBasics/reduceByKey1.scala)
+			- [reduceByKey1](./src/main/scala/com/yen/sparkBatchBasics/reduceByKey1.scala)
 		- groupByKey
 			- group by key, and shuffle directly
 			- reduceByKey is more preferable than groupByKey in general cases, but still need to consider biz requirements
 		- aggregateByKey
-			- [aggregateByKey1](https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/sparkBatchBasics/aggregateByKey1.scala)
+			- [aggregateByKey1](./src/main/scala/com/yen/sparkBatchBasics/aggregateByKey1.scala)
 		- foldByKey
+			-  * General ordering :
+				- aggregateByKey -> foldByKey -> reduceByKey
+			- [foldByKey1](./src/main/scala/com/yen/sparkBatchBasics/foldByKey1.scala)
 		- combineByKey
 		- sortedByKey
 		- join
