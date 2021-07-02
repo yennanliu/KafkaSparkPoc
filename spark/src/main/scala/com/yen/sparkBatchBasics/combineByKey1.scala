@@ -5,8 +5,13 @@ import org.apache.spark.SparkContext
 /**
  *  combineByKey
  *
+ *  1) Steps : plz ref // https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/doc/pic/combineByKey1.png
  *
+ *     step 1) (v) => (v,1)  // make a tuple
+ *     step 2) (acc:(Int,Int), v) => (acc._1+v, acc._2+1) // adding first element, second element plus 1
+ *     step 3) x:(Int,Int), y:(Int,Int) => (x._1 + y._1, x._2 + y._2)  // adding on first element itself, adding on second element itself
  *
+ *  2) NOTE : we need to offer param type when use combineByKey
  *
  *  // definition :  NOTE : we need to offer param type when use combineByKey
  *
@@ -20,6 +25,7 @@ import org.apache.spark.SparkContext
  */
 
 // https://www.youtube.com/watch?v=XHQvhuGLXeg&list=PLmOn9nNkQxJF-qlCCDx9WsdAe6x5hhH77&index=44
+// https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/doc/pic/combineByKey1.png
 
 object combineByKey1 extends App {
 
