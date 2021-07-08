@@ -62,7 +62,8 @@
 				- aggregateByKey -> foldByKey -> reduceByKey
 			- [foldByKey1](https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/sparkBatchBasics/foldByKey1.scala)
 		- combineByKey
-			- [combineByKey](https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/sparkBatchBasics/combineByKey1.scala)
+			- [combineByKey1](https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/sparkBatchBasics/combineByKey1.scala)
+			- [combineByKey2](https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/sparkBatchBasics/combineByKey2.scala)
 		- sortedByKey
 		- join
 		- cogroup
