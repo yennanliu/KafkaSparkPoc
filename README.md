@@ -70,7 +70,10 @@
 - Action
 	- reduce(func)
 		- via func aggregate records in same partition, then aggregate records across partitions
+		- there is a "pre-process" step
 	- collect
+		- workers will aggrgate all its result, then send back to driver
+		- DON'T use it in prod env
 	- count
 	- first
 	- take(n)

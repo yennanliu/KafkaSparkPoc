@@ -24,6 +24,9 @@ object streamKafkaToHDFSV3 extends App {
     .config("spark.sql.warehouse.dir", "/temp") // Necessary to work around a Windows bug in Spark 2.0.0; omit if you're not on Windows.
     .getOrCreate()
 
+  import org.apache.spark.sql.functions._
+  import spark.implicits._
+
   // kafka config
   val bootStrapServers = "127.0.0.1:9092"
   // digest event from a list of topics
@@ -43,20 +46,33 @@ object streamKafkaToHDFSV3 extends App {
     "CAST(value AS STRING)"
   )
 
+//  val eventDF = tmpStreamDF.select("value.*")
+//    //.withColumn("CreatedTime", to_timestamp(col("CreatedTime"), "yyyy-MM-dd HH:mm:ss"))
+//    .withColumn("id", expr("id"))
+//    .withColumn("event_date", expr("event_date"))
+//    .withColumn("msg", expr("msg"))
+
+  val eventDF2 = tmpStreamDF.select($"*", explode($"value"))
+    .withColumn("id", expr("id"))
+    .withColumn("event_date", expr("event_date"))
+    .withColumn("msg", expr("msg"))
+
   /** V1 : print out in console */
-  //    val query = tmpStreamDF.writeStream
-  //          .format("console")
-  //          .option("checkpointLocation", "chk-point-dir2")
-  //          .start()
+  val query = eventDF2.writeStream
+            .format("console")
+            .option("checkpointLocation", "chk-point-dir2")
+            .start()
+
+  tmpStreamDF.printSchema()
 
   /** V2 : save into HDFS */
-     val query = tmpStreamDF
-            .writeStream
-            .partitionBy("topic") // save data partition by column : http://spark.apache.org/docs/2.1.1/api/java/org/apache/spark/sql/streaming/DataStreamWriter.html
-            .format("json")
-            .option("checkpointLocation", "chk-point-dir2")
-            .option("path", s"streamKafkaToHDFSV3")
-            .start()
+//     val query = tmpStreamDF
+//            .writeStream
+//            .partitionBy("topic") // save data partition by column : http://spark.apache.org/docs/2.1.1/api/java/org/apache/spark/sql/streaming/DataStreamWriter.html
+//            .format("json")
+//            .option("checkpointLocation", "chk-point-dir2")
+//            .option("path", s"streamKafkaToHDFSV3")
+//            .start()
 
   query.awaitTermination()
 }
