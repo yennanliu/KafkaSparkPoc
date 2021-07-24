@@ -79,6 +79,7 @@
 	- take(n)
 	- takeOrdered(n)
 	- aggregate
+		- [aggregateByKey1](https://github.com/yennanliu/KafkaSparkPoc/blob/main/spark/src/main/scala/com/yen/sparkBatchBasics/aggregateByKey1.scala)
 	- fold(num)(func)
 	- saveAsTextFile
 	- saveAsSequenceFile
