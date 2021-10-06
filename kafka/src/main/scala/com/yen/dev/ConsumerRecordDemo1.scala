@@ -20,7 +20,7 @@ import scala.collection.mutable.ListBuffer
  */
 
 
-object eventTransform1 extends App {
+object ConsumerRecordDemo1 extends App {
 
   /** demo 1 : init ConsumerRecord with generic type */
   val my_record1:ConsumerRecord[String, String] = new ConsumerRecord("a",2,100,"key", "value")
@@ -42,11 +42,27 @@ object eventTransform1 extends App {
 
   println("=================================")
 
+  /** demo 3 : map on ConsumerRecord */
+  val myEvent1 = ListBuffer(
+    new ConsumerRecord("a",2,100,"key", "value"),
+    new ConsumerRecord("a",2,100,"key", ListBuffer(1,2,3)),
+    new ConsumerRecord("a",2,100,"key", 3)
+  )
+
+  myEvent1.foreach(println(_))
+
+  println("=================================")
+
+  val myEvent2 = myEvent1.map{
+    x =>
+      new ConsumerRecord(x.topic + "_abc", x.partition, x.offset,x.key,x.value)
+  }
+
+  myEvent2.foreach(println(_))
+
 }
 
-case class A(a:String)
-case class B(b:Int)
-
+// some dev case class (not used in this demo)
 case class my_event(
                        a:ListBuffer[Int],
                        b:String,

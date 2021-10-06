@@ -23,6 +23,16 @@
 	- Kafka -> Spark -> HDFS
 	- Spark -> Kafka
 
+## Scope (Kafka)
+<details>
+<summary>Kafka</summary>
+
+- Basics
+	- Event init, transform
+		- [ConsumerRecordDemo1](https://github.com/yennanliu/KafkaSparkPoc/blob/main/kafka/src/main/scala/com/yen/dev/ConsumerRecordDemo1.scala)
+
+</details>
+
 ## Scope (Spark)
 <details>
 <summary>Spark</summary>
