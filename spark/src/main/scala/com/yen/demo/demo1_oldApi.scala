@@ -1,16 +1,13 @@
-package com.yen.dev
+package com.yen.demo
 
-// https://spark.apache.org/docs/latest/streaming-programming-guide.html
-
-/** Spark stream from terminal socket (new API) */
-
-import org.apache.spark._
-import org.apache.spark.streaming._
+import org.apache.spark.SparkConf
 import org.apache.spark.streaming.dstream.{DStream, ReceiverInputDStream}
+import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 object demo1_oldApi extends App{
 
   val conf = new SparkConf().setMaster("local[*]").setAppName("demo1_oldApi")
+
   // StreamingContext is entry point to spark stream
   val ssc = new StreamingContext(conf, Seconds(1))
 

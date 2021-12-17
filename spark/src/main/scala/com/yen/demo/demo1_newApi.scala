@@ -1,10 +1,7 @@
-package com.yen.dev
+package com.yen.demo
 
-// https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html
-
-import org.apache.spark.sql.functions._
-import org.apache.spark.sql.SparkSession
-
+import org.apache.spark.sql
+import org.apache.spark.sql.{Dataset, SparkSession}
 
 object demo1_newApi extends App{
 
@@ -23,22 +20,21 @@ object demo1_newApi extends App{
     .option("port", 9999)
     .load()
 
-
   // Split the lines into words
-  val words = lines.as[String].flatMap(_.split(" "))
+  val words: Dataset[String] = lines.as[String].flatMap(_.split(" "))
 
   // mapping
-  val pairs = words.map(word => (word, 1))
+  val pairs: Dataset[(String, Int)] = words.map(word => (word, 1))
 
   // Generate running word count
-  val wordCounts = words.groupBy("value").count()
+  val wordCounts:sql.DataFrame = words.groupBy("value").count()
 
   // Start running the query that prints the running counts to the console
   val query = wordCounts.writeStream
     .outputMode("complete")
+    .queryName("traffic")
     .format("console")
     .start()
 
   query.awaitTermination()
-
 }
