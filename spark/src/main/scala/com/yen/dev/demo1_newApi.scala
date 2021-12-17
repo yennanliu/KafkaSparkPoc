@@ -1,31 +1,44 @@
 package com.yen.dev
 
-// https://spark.apache.org/docs/latest/streaming-programming-guide.html
+// https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html
 
-import org.apache.spark._
-import org.apache.spark.streaming._
-import org.apache.spark.streaming.dstream.{DStream, ReceiverInputDStream}
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.SparkSession
+
 
 object demo1_newApi extends App{
 
-  val conf = new SparkConf().setMaster("local[*]").setAppName("NetworkWordCount")
-  // StreamingContext is entry point to spark stream
-  val ssc = new StreamingContext(conf, Seconds(1))
+  val spark = SparkSession
+    .builder
+    .appName("demo1_newApi")
+    .config("spark.master", "local")
+    .getOrCreate()
 
-  // Create a DStream that will connect to hostname:port, like localhost:9999
-  val lines: ReceiverInputDStream[String] = ssc.socketTextStream("localhost", 9999)
+  import spark.implicits._
 
-  // Split each line into words, words is DStream[String] type
-  val words:DStream[String] = lines.flatMap(_.split(" "))
+  // Create DataFrame representing the stream of input lines from connection to localhost:9999
+  val lines = spark.readStream
+    .format("socket")
+    .option("host", "localhost")
+    .option("port", 9999)
+    .load()
+
+
+  // Split the lines into words
+  val words = lines.as[String].flatMap(_.split(" "))
 
   // mapping
   val pairs = words.map(word => (word, 1))
 
-  // reduceByKey
-  val wordCounts = pairs.reduceByKey(_ + _)
+  // Generate running word count
+  val wordCounts = words.groupBy("value").count()
 
-  wordCounts.print()
+  // Start running the query that prints the running counts to the console
+  val query = wordCounts.writeStream
+    .outputMode("complete")
+    .format("console")
+    .start()
 
-  ssc.start()             // Start the computation
-  ssc.awaitTermination()  // Wait for the computation to terminate
+  query.awaitTermination()
+
 }
