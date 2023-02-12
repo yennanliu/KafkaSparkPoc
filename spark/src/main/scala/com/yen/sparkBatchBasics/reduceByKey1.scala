@@ -3,7 +3,7 @@ package com.yen.sparkBatchBasics
 import org.apache.spark.SparkContext
 
 // https://www.youtube.com/watch?v=v-n85y2YTR0&list=PLmOn9nNkQxJF-qlCCDx9WsdAe6x5hhH77&index=41
-
+// https://github.com/yennanliu/til/blob/master/README.md#20230212
 /**
  *  reduceByKey
  *
