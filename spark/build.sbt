@@ -32,7 +32,12 @@ libraryDependencies ++= Seq(
 
   // json op
   // https://index.scala-lang.org/spray/spray-json/spray-json/1.2.5?target=_2.10
-  "io.spray" %%  "spray-json" % "1.3.6"
+  "io.spray" %%  "spray-json" % "1.3.6",
+
+  // reshift
+  // https://mvnrepository.com/artifact/io.github.spark-redshift-community/spark-redshift
+  "io.github.spark-redshift-community" %% "spark-redshift" % "5.0.3"
+
 )
 
 conflictManager := ConflictManager.latestRevision
