@@ -1,6 +1,6 @@
 package dev
 
-import model.pvreJson
+import model.pJson
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql._
 import org.apache.spark.sql.types.StructType

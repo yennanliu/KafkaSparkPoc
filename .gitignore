@@ -31,3 +31,10 @@ kafkaJava/pos-simulator.iml
 kafka/project/target/scala-2.12/sbt-1.0/update/update_cache_2.12/output
 kafka/project/target/streams/compile/compileIncremental/_global/streams/out
 kafka/project/target/streams/compile/copyResources/_global/streams/out
+
+# spark-poc
+spark-poc/sparkJob/.bsp/
+spark-poc/sparkJob/.idea/
+spark-poc/sparkJob/project/project/
+spark-poc/sparkJob/project/target/
+spark-poc/sparkJob/target/
