@@ -19,7 +19,9 @@ sbt assembly
 # run
 spark-submit \
  --class dev.SparkApp1 \
- target/scala-2.11/xxx.jar
+ --deploy-mode cluster \
+s3://xxx/sparkJob-assembly-0.1.0-SNAPSHOT.jar
+
 ```
 
 ## Ref
