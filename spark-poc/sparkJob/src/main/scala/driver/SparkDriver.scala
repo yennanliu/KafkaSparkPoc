@@ -13,8 +13,8 @@ object SparkDriver {
     // attr
     val arguments: String = "someArgument"
     logger.debug("get spark session")
-    val spark:SparkSession = getSparkSession(appName)
-    logger.debug(f"spark session = ${spark}")
+//    val _spark:SparkSession = getSparkSession(appName)
+//    logger.debug(f"spark session = ${_spark}")
 
     def getSparkSession(appName: String, executionType: String = "cluster", cores: Int = 3): SparkSession = {
       // TODO : setup for local, cluster... mode
