@@ -19,16 +19,16 @@ import org.apache.spark.streaming.kinesis.KinesisInputDStream
  * https://github.com/apache/spark/blob/master/connector/kinesis-asl/src/main/scala/org/apache/spark/examples/streaming/KinesisWordCountASL.scala
  *
  */
-class SparkApp1 {
+object SparkApp1 {
 
   def main(args: Array[String]): Unit = {
 
     val APP_NAME = "Stream SparkApp1"
-    val KINESIS_END_POINT_URL = ""
-    val REGION_NAME = ""
-    val STREAM_NAME = ""
+    val KINESIS_END_POINT_URL = "kinesis.us-east-1.amazonaws.com"
+    val REGION_NAME = "us-east-1"
+    //val STREAM_NAME = "my_kinesis_stream_2"
     val KINESIS_APP_NAME = "KINESIS_APP"
-    val KINESIS_STREAM_NAME = "KINESIS_STREAM"
+    val KINESIS_STREAM_NAME = "my_kinesis_stream_2"
     val numStreams = 100
 
     val conf = new SparkConf()
@@ -72,6 +72,9 @@ class SparkApp1 {
 
     // Map each word to a (word, 1) tuple so we can reduce by key to count the words
     val wordCounts = words.map(word => (word, 1)).reduceByKey(_ + _)
+
+    //println(">>> count = " + wordCounts.count().toString)
+    //println(">>> count = " + words.co)
 
     // Print the first 10 wordCounts
     wordCounts.print()
