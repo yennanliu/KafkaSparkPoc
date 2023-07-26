@@ -33,7 +33,8 @@ object SparkApp1 {
 
     val conf = new SparkConf()
       .setAppName(APP_NAME)
-      .setMaster("local[*]")
+      .setMaster("yarn") // emr
+      //.setMaster("local[*]") // local
 
 
     val ssc = new StreamingContext(conf, Seconds(1))
@@ -74,6 +75,8 @@ object SparkApp1 {
     val wordCounts = words.map(word => (word, 1)).reduceByKey(_ + _)
     val wordSample = words.map(word => (word, 1))
 
+    unionStreams.print(3)
+
     //println(">>> count = " + wordCounts.count().toString)
     //println(">>> count = " + words.co)
 
@@ -84,7 +87,6 @@ object SparkApp1 {
     // Start the streaming context and await termination
     ssc.start()
     ssc.awaitTermination()
-
   }
 
 }
