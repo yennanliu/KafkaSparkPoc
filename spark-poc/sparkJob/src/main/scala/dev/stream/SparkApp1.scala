@@ -59,7 +59,7 @@ object SparkApp1 {
         .regionName(REGION_NAME)
         .initialPosition(new Latest())
         .checkpointAppName(KINESIS_APP_NAME)
-        .checkpointInterval(new Duration(2000))
+        //.checkpointInterval(new Duration(2000))
         .storageLevel(StorageLevel.MEMORY_AND_DISK_2)
         .build()
     }
@@ -72,12 +72,14 @@ object SparkApp1 {
 
     // Map each word to a (word, 1) tuple so we can reduce by key to count the words
     val wordCounts = words.map(word => (word, 1)).reduceByKey(_ + _)
+    val wordSample = words.map(word => (word, 1))
 
     //println(">>> count = " + wordCounts.count().toString)
     //println(">>> count = " + words.co)
 
     // Print the first 10 wordCounts
     wordCounts.print()
+    wordSample.print()
 
     // Start the streaming context and await termination
     ssc.start()
