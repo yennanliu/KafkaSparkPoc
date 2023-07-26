@@ -14,8 +14,12 @@ lazy val root = (project in file("."))
 
 libraryDependencies ++= Seq(
 
+  // spark batch
   "org.apache.spark" %% "spark-core" % sparkVersion,
   "org.apache.spark" %% "spark-sql" % sparkVersion,
+
+  // spark kinesis
+  "org.apache.spark" %% "spark-streaming-kinesis-asl" %  sparkVersion,
 
   "com.typesafe" % "config" % "1.3.1"
 )

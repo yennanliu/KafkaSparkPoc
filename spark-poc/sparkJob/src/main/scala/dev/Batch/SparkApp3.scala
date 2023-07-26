@@ -1,11 +1,11 @@
-package dev
+package dev.Batch
 
 import model.pJson
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql._
-import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.catalyst.ScalaReflection
 import org.apache.spark.sql.functions.explode
+import org.apache.spark.sql.types.StructType
+import org.apache.spark.{SparkConf, SparkContext}
 
 object SparkApp3 {
 

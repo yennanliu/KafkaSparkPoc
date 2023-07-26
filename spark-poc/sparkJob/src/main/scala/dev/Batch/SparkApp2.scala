@@ -1,4 +1,4 @@
-package dev
+package dev.Batch
 
 import org.apache.spark.{SparkConf, SparkContext}
 
