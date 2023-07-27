@@ -93,7 +93,7 @@ object SparkApp1 {
       if (rdd.count() > 0){
         println("record count = " + rdd.count())
         val str = rdd.map(str => new String(str))
-        str.saveAsTextFile("/output/SparkApp1_output.txt")
+        str.saveAsTextFile("/Users/yenanliu/KafkaSparkPoc/spark-poc/output/SparkApp1_output.txt")
 
         val records = str.toString()
         val df = spark.read.json(Seq(records).toDS)
