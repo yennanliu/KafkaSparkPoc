@@ -33,8 +33,8 @@ object SparkApp1 {
 
     val conf = new SparkConf()
       .setAppName(APP_NAME)
-      //.setMaster("yarn") // emr
-      .setMaster("local[*]") // local
+      .setMaster("yarn") // emr
+      //.setMaster("local[*]") // local
 
 
     /**
@@ -99,6 +99,15 @@ object SparkApp1 {
 
         val records = str.toString()
         val df = spark.read.json(Seq(records).toDS)
+
+        // TODO : fix write to s3
+        df.write
+          .option("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+          .option("com.amazonaws.services.s3.enableV4", "true")
+          .option("fs.AbstractFileSystem.s3a.impl", "org.apache.hadoop.fs.s3a.S3A")
+          .mode("append")
+          .csv("s3://spark-cluster-7/text-output/")
+
         df.count()
         df.show()
       }

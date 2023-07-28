@@ -21,6 +21,9 @@ libraryDependencies ++= Seq(
   // spark kinesis
   "org.apache.spark" %% "spark-streaming-kinesis-asl" %  sparkVersion,
 
+  // write to s3
+  "org.apache.spark" %% "spark-hadoop-cloud" % sparkVersion,
+
   "com.typesafe" % "config" % "1.3.1"
 )
 
