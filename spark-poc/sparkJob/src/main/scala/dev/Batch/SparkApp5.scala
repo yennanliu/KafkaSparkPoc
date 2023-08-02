@@ -24,52 +24,71 @@ object SparkApp5 {
 
     val conf = new SparkConf()
       .setAppName("SparkApp5")
-      .setMaster("yarn")
+      .setMaster("local[*]")
+      //.setMaster("yarn")
 
     val sc = new SparkContext(conf)
 
     val spark = SparkSession.builder()
       .appName("SparkApp5")
-      .master("yarn")
+      .master("local[*]")
+      //.master("yarn")
       .getOrCreate()
 
     import spark.implicits._
 
-    // define schema for raw json data
-    val r_schema = ScalaReflection.schemaFor[RawRecord].dataType.asInstanceOf[StructType]
-    r_schema.printTreeString
+    val path = "/src/main/resources/"
+    // "src/main/resources/people.json"
+    // val peopleDF = spark.read.json("src/main/resources/people.json")
+    val df = spark.read
+      //.option("multiline", true)
+      .json( "src/main/resources/test.json")
 
-    // get df
-    val s3_bucket = s"s3://${BUCKET_NAME}/${INPUT_BUCKET_PATH}"
-    val dest_s3_path = s"s3://${BUCKET_NAME}/${OUTPUT_BUCKET_PATH}"
 
-    println(">>> s3_bucket = " + s3_bucket)
-    println(">>> dest_s3_path = " + dest_s3_path)
+    df.show()
 
-    val df_with_schema = spark.read
-      .schema(r_schema)
-      .option("multiline", true)
-      .json(s3_bucket)
+    df.printSchema()
 
-    //df_with_schema.printSchema()
-
-    println("data count = " + df_with_schema.count())
-
-    df_with_schema.show()
-
-    // flatten df
-    val flatten_df = df_with_schema
-      .select(explode($"hostVulnerabilityList")
-        .as("exploded"))
-      .select("exploded.*")
-
-    flatten_df.show(3)
-
-    // save to s3
-    flatten_df
-      .write.format("csv")
-      .option("header", "true")
-      .mode("append").save(dest_s3_path)
+//    // define schema for raw json data
+//    val r_schema = ScalaReflection.schemaFor[RawRecord].dataType.asInstanceOf[StructType]
+//    r_schema.printTreeString
+//
+//    // get df
+//    val s3_bucket = s"s3://${BUCKET_NAME}/${INPUT_BUCKET_PATH}"
+//    val dest_s3_path = s"s3://${BUCKET_NAME}/${OUTPUT_BUCKET_PATH}"
+//
+//    println(">>> s3_bucket = " + s3_bucket)
+//    println(">>> dest_s3_path = " + dest_s3_path)
+//
+//    val df_with_schema = spark.read
+//      .schema(r_schema)
+//      .option("multiline", true)
+//      .json(s3_bucket)
+//
+//
+//    // spark.read.json("src/main/resources/zipcodes.json")
+//    val df_test = spark.read
+//      .json(s3_bucket)
+//
+//    //df_with_schema.printSchema()
+//
+//    println("data count = " + df_with_schema.count())
+//
+//    df_with_schema.show()
+//
+//    // flatten df
+//    val flatten_df = df_with_schema
+//      .select(explode($"hostVulnerabilityList")
+//        .as("exploded"))
+//      .select("exploded.*")
+//
+//    flatten_df.show(3)
+//
+//    // save to s3
+//    flatten_df
+//      .write.format("csv")
+//      .option("header", "true")
+//      .mode("append").save(dest_s3_path)
 
   }
 
