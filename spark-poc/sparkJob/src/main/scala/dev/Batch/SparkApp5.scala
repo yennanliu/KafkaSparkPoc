@@ -1,9 +1,9 @@
 package dev.Batch
 
-import model.{EventLog, RawRecord}
+import model.EventLog
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.ScalaReflection
-import org.apache.spark.sql.functions.explode
+import org.apache.spark.sql.functions.{col, explode, from_unixtime}
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -16,12 +16,14 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object SparkApp5 {
 
+
   def main(args: Array[String]): Unit = {
 
     // s3://firehose-my-kinesis-stream-3/XYZ/firehose-my_kinesis_stream_3_dev1-1-2023-08-03-15-30-16-e5adf553-63b3-3ff6-b05f-2126e05b4c56
     val BUCKET_NAME = "firehose-my-kinesis-stream-3"
     val INPUT_BUCKET_PATH = "eventDate=2023-08-09/"
-    val OUTPUT_BUCKET_PATH = "spark_output2/"
+    val OUTPUT_BUCKET_PATH = "spark_raw_output/"
+    val AGGRE_OUTPUT_BUCKET_PATH = "spark_aggr_output/"
 
     val conf = new SparkConf()
       .setAppName("SparkApp5")
@@ -61,17 +63,10 @@ object SparkApp5 {
     // get df
     val s3_bucket = s"s3://${BUCKET_NAME}/${INPUT_BUCKET_PATH}*"
     val dest_s3_path = s"s3://${BUCKET_NAME}/${OUTPUT_BUCKET_PATH}"
+    val aggre_dest_s3_path = s"s3://${BUCKET_NAME}/${AGGRE_OUTPUT_BUCKET_PATH}"
 
     println(">>> s3_bucket = " + s3_bucket)
     println(">>> dest_s3_path = " + dest_s3_path)
-
-//    case class eventLog(
-//                         eventType: String,
-//                         id: String,
-//                         machine: String,
-//                         port: Int,
-//                         env: String
-//                       )
 
     val _schema = ScalaReflection.schemaFor[EventLog].dataType.asInstanceOf[StructType]
 
@@ -88,22 +83,25 @@ object SparkApp5 {
 
     df_with_schema.show()
 
-    // flatten df
-//    val flatten_df = df_with_schema
-//      .select(explode($"hostVulnerabilityList")
-//        .as("exploded"))
-//      .select("exploded.*")
+    df_with_schema.show(3)
 
-    val flatten_df = df_with_schema
-
-    flatten_df.show(3)
-
-    // save to s3
-    flatten_df
+    // save raw to s3
+    df_with_schema
       .write.format("csv")
       .option("header", "true")
       .mode("append").save(dest_s3_path)
 
+    // save aggr to s3
+    val df_aggr = df_with_schema.select(
+      col("machine").as("machine"),
+      col("eventType").as("eventType"),
+      from_unixtime(col("timeStamp"),"MM-dd-yyyy HH:mm:ss").as("_timestamp")
+    ).groupBy("_timestamp", "machine").count()
+
+    df_aggr
+      .write.format("csv")
+      .option("header", "true")
+      .mode("append").save(aggre_dest_s3_path)
   }
 
 }
