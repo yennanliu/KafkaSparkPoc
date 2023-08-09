@@ -1,2 +1,9 @@
-{"tickerSymbol":null,"tradeType":"XYZ","price":999.34,"quantity":100,"id":123}
-{"tickerSymbol":null,"tradeType":"XYZ","price":999.34,"quantity":100,"id":123}
+{"eventType":"type3","id":"3003","machine":"b27e7296-c41e-46b9-8d35-1e6c49846244","port":22,"env":"dev"}
+{"eventType":"type3","id":"3003","machine":"872296ae-7c04-493d-bbde-70e852789e18","port":22,"env":"dev"}
+{"eventType":"type3","id":"3003","machine":"e229a2c8-50f5-4577-8a13-b198cfc55f64","port":22,"env":"dev"}
+{"eventType":"type3","id":"3003","machine":"5a9c0902-b2c0-4046-b57e-7916b610132d","port":22,"env":"dev"}
+{"eventType":"type3","id":"3003","machine":"6cfb79ac-53c5-4752-ad28-c204d05caf6d","port":22,"env":"dev"}
+{"eventType":"type3","id":"3003","machine":"68d14f80-17b0-40a6-ba62-aae4284f6e80","port":22,"env":"dev"}
+{"eventType":"type3","id":"3003","machine":"0e21b3aa-99f8-433f-80e7-6e6e1f109433","port":22,"env":"dev"}
+{"eventType":"type3","id":"3003","machine":"59043851-abf9-4454-9d9b-5f540adeec8b","port":22,"env":"dev"}
+{"eventType":"type3","id":"3003","machine":"6cdb9baf-82a6-44a6-a4f8-9b032c3fe88e","port":22,"env":"dev"}
