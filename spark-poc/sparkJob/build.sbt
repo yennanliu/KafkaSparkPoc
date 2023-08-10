@@ -24,7 +24,8 @@ libraryDependencies ++= Seq(
   // write to s3
   "org.apache.spark" %% "spark-hadoop-cloud" % sparkVersion,
 
-  "com.typesafe" % "config" % "1.3.1"
+  "com.typesafe" % "config" % "1.3.1",
+  "com.github.scopt" %% "scopt" % "3.6.0"
 )
 
 conflictManager := ConflictManager.latestRevision

@@ -6,12 +6,12 @@ import org.apache.spark.sql.SparkSession
 
 object SparkDriver {
 
-  val appName: String = "defaultSparkApp"
+//  val appName: String = "defaultSparkApp"
   @transient lazy val logger: Logger = Logger.getLogger(getClass.getName)
-
-  def main(args: Array[String]): Unit = {
-
-  }
+//
+//  def main(args: Array[String]): Unit = {
+//
+//  }
 
   // attr
   val arguments: String = "someArgument"
@@ -23,14 +23,27 @@ object SparkDriver {
     new SparkContext(conf)
   }
 
-  def getSparkSession(appName: String, executionType: String = "cluster", cores: Int = 3): SparkSession = {
-    // TODO : setup for local, cluster... mode
-    SparkSession
-      .builder()
-      .appName(appName)
-      //.enableHiveSupport()
-      .master("local[*]")
-      .getOrCreate()
+  def getSparkSession(appName: String, executionType: String = "cluster", cores: Int = 3, enableHive: Boolean = false): SparkSession = {
+
+    var _executionType = executionType
+    if(!executionType.equals("cluster")){
+      _executionType = "local[*]"
+    }
+
+    if (enableHive){
+      SparkSession
+        .builder()
+        .appName(appName)
+        .enableHiveSupport()
+        .master(_executionType)
+        .getOrCreate()
+    }else{
+      SparkSession
+        .builder()
+        .appName(appName)
+        .master(_executionType)
+        .getOrCreate()
+    }
 
   }
 }
