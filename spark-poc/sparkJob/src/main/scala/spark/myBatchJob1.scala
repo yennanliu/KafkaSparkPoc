@@ -6,7 +6,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.slf4j.LoggerFactory
 
-object myJob1 {
+object myBatchJob1 {
 
   def main(args: Array[String]): Unit = {
 
@@ -14,10 +14,10 @@ object myJob1 {
     //logger.info(AppConfig.dump)
 
     val conf = new SparkConf()
-      .setAppName("myJob1")
+      .setAppName("myBatchJob1")
       .setMaster("local[*]")
 
-    val sc = SparkDriver.getSparkContext("myJob1", conf);
+    val sc = SparkDriver.getSparkContext("myBatchJob1", conf)
     val spark = SparkDriver
     println("sc = " + sc)
     println("spark = " + spark)
