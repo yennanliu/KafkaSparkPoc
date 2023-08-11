@@ -1,7 +1,7 @@
 package model
 
 case class EventLog(
-                     timeStamp: Int,
+                     timeStamp: Long,
                      eventType: String,
                      id: String,
                      machine: String,

@@ -7,6 +7,9 @@ import org.apache.spark.sql.functions.{col, explode, from_unixtime}
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.{SparkConf, SparkContext}
 
+import java.text.SimpleDateFormat
+import java.util.Calendar
+
 /**
  *  process S3 data output from Lambda, save output to s3
  *
@@ -19,11 +22,13 @@ object SparkApp5 {
 
   def main(args: Array[String]): Unit = {
 
-    // s3://firehose-my-kinesis-stream-3/XYZ/firehose-my_kinesis_stream_3_dev1-1-2023-08-03-15-30-16-e5adf553-63b3-3ff6-b05f-2126e05b4c56
+    val formatter = new SimpleDateFormat("yyyy-MM-dd")
+    val _today = formatter.format(Calendar.getInstance().getTime())
+
     val BUCKET_NAME = "firehose-my-kinesis-stream-3"
-    val INPUT_BUCKET_PATH = "eventDate=2023-08-09/"
-    val OUTPUT_BUCKET_PATH = "spark_raw_output/"
-    val AGGRE_OUTPUT_BUCKET_PATH = "spark_aggr_output/"
+    val INPUT_BUCKET_PATH = s"eventDate=${_today}/"
+    val OUTPUT_BUCKET_PATH = s"spark_raw_output/insert_date=${_today}"
+    val AGGRE_OUTPUT_BUCKET_PATH = s"spark_aggr_output/insert_date=${_today}"
 
     val conf = new SparkConf()
       .setAppName("SparkApp5")
@@ -46,19 +51,9 @@ object SparkApp5 {
 //    val df = spark.read
 //      //.option("multiline", true)
 //      .json( "src/main/resources/test.json")
-
-
 //    df.show()
-//
 //    df.count()
-//
 //    df.printSchema()
-
-//    // define schema for raw json data
-//    val r_schema = ScalaReflection.schemaFor[RawRecord].dataType.asInstanceOf[StructType]
-//    r_schema.printTreeString
-
-    // {"eventType":"type3","id":"3003","machine":"30666b89-e87a-42d7-b760-4c880550ea95","port":22,"env":"dev"}
 
     // get df
     val s3_bucket = s"s3://${BUCKET_NAME}/${INPUT_BUCKET_PATH}*"
@@ -95,8 +90,10 @@ object SparkApp5 {
     val df_aggr = df_with_schema.select(
       col("machine").as("machine"),
       col("eventType").as("eventType"),
-      from_unixtime(col("timeStamp"),"MM-dd-yyyy HH:mm:ss").as("_timestamp")
-    ).groupBy("_timestamp", "machine").count()
+      col("timeStamp").as("timeStamp")
+      //from_unixtime(col("timeStamp"),"MM-dd-yyyy HH:mm:ss").as("_timestamp"),
+       // from_unixtime(col("timeStamp"),"MM-dd-yyyy HH:mm:ss").as("_timestamp")
+    ).groupBy("timeStamp", "machine").count()
 
     df_aggr
       .write.format("csv")
